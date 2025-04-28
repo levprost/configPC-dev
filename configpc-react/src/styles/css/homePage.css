@@ -1,0 +1,148 @@
+/* main style */
+.mainHome{
+  background-color: rgb(54, 54, 54);
+}
+/* carousel */
+.carImg {
+  width: 100%;
+  height: 90vh;
+  object-fit: cover;
+  padding: 0 !important;
+  position: relative;
+}
+.btnCalcImg {
+  display: none;
+}
+.titleSlideImg {
+  display: none;
+  position: absolute;
+  font-family: "Cascadia Mono", sans-serif;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  z-index: 10;
+  width: 80%;
+}
+.rightSide {
+  background-color: black;
+  position: relative;
+}
+.titleSlide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: xxx-large;
+  font-weight: 1200;
+  text-align: top;
+}
+/* posts cards styles */
+.titleSection1{
+  color:white;
+}
+.subtitleSection1{
+  color:rgb(151, 151, 151);
+}
+.cardStylePost {
+  background-color: rgb(54, 54, 54);
+  border-radius: 10px;
+  border: none;
+  --bs-card-border-color: rgb(116, 116, 116) !important;
+  --bs-card-bg: rgb(72, 72, 72) !important;
+  --bs-card-box-shadow: 0px 0px 5px rgb(0, 0, 0) !important;
+  box-shadow: 0px 0px 10px rgb(16, 16, 16);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  margin: 10px;
+  color:white;
+  font-family: "Cascadia Mono", sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cardStylePost:hover {
+  background-color: rgb(72, 72, 72);
+  box-shadow: 0px 0px 15px rgb(32, 32, 32);
+  transform: scale(1.05);
+}
+.strictLine{
+  color:rgb(196, 196, 196);
+}
+.containerImgPost{
+  height: 200px;
+  align-content: center;
+  overflow: hidden !important;
+}
+.containerImgPost img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.cardBodyPost{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 10px;
+}
+.card-text{
+  color: rgb(255, 255, 255);
+}
+.card-title{
+  color: rgb(255, 255, 255) !important;
+  border-bottom: 1px solid rgb(196, 196, 196);
+}
+.btn-default12{
+  background-color: rgb(54, 54, 54);
+  color: white;
+  border: none;
+  font-family: "Cascadia Mono", sans-serif;
+  font-size: large;
+  font-weight: 700;
+  transition: all 0.3s ease-in-out;
+  margin-top: auto; 
+  align-self: flex-end;
+}
+
+@media (max-width: 768px) {
+  
+  .cardBodyPost{
+    height: 100%;
+  }
+  .titleSlide {
+    display: none;
+  }
+  .rightSide {
+    display: none;
+  }
+  .carImg {
+    height: 50vh;
+    position: relative;
+    filter: blur(3px);
+  }
+  .titleSlideImg {
+    display: block;
+    font-family: "Cascadia Mono", sans-serif;
+  }
+  .btnCalc {
+    display: none;
+  }
+  .btnCalc {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: top;
+  }
+}

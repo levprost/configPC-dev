@@ -1,0 +1,20 @@
+.logo img {
+  max-width: 100px;
+  height: auto;
+}
+.customColor{
+  background-color: black;
+}
+.nav-item{
+  margin-right: 5px;
+}
+
+.customLink{
+  color:white !important;
+}
+.customLink:hover {
+  color: #636363 !important; 
+}
+.navbar-nav {
+  margin-left: auto;
+}

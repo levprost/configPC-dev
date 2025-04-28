@@ -1,0 +1,21 @@
+.mainadmin {
+  padding: 20px;
+}
+
+.icon-wrapper {
+  font-size: 2em; 
+}
+
+.card-admin {
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  border: solid 1px #000;
+  border-radius: 5px;
+  padding: 6px;
+}
+
+.card-admin:hover {
+  transform: scale(1.05);
+}
+
+

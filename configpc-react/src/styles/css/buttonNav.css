@@ -1,0 +1,59 @@
+.glowing-btn-nav {
+  position: relative;
+  color: var(--button-color, hsl(0, 100%, 69%));
+  cursor: pointer;
+  padding: 0.35em 1em;
+  border: 0.15em solid var(--button-color, hsl(0, 100%, 69%));
+  border-radius: 0.45em;
+  background: none;
+  font-family: "Raleway", sans-serif;
+  font-size: 1.5em;
+  font-weight: 900;
+  box-shadow: inset 0px 0px 0.5em 0px var(--button-color), 0px 0px 0.5em 0px var(--button-color);
+  --bs-btn-bg: transparent !important;
+  --bs-btn-border-color: transparent !important;
+  --bs-btn-hover-bg: transparent !important;
+  --bs-btn-hover-border-color: transparent !important;
+  --bs-btn-disabled-bg: transparent !important;
+  --bs-btn-disabled-border-color: transparent !important;
+  color: var(--btn-color, white);
+  border: none !important;
+  outline: none !important;
+}
+
+.glow-effect::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.7;
+  filter: blur(1em);
+  background: var(--button-color);
+  pointer-events: none;
+}
+
+.glow-effect:hover {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.no-glow {
+  box-shadow: none;
+}
+@keyframes flicker {
+    0% { opacity: 0.2; filter: blur(0.8em); }
+    50% { opacity: 0.7; filter: blur(1.2em); }
+    100% { opacity: 0.4; filter: blur(1em); }
+  }
+  
+  .glow-effect::before {
+    animation: flicker 3s infinite alternate;
+  }
+  
+@media only screen and (max-width: 600px) {
+  .glowing-btn-nav {
+    font-size: 1em;
+  }
+}
+
