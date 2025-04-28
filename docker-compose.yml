@@ -1,13 +1,13 @@
 services:
   laravel-docker:
     container_name: laravel-docker
-    build: ./ConfigPC
+    build: ./configPC-laravel
     ports:
       - 8000:80
 
   vue-docker:
     container_name: vue-docker
-    build: ./Cursus-spa
+    build: ./configpc-react
     ports:
       - 80:80
 
