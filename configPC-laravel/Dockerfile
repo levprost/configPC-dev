@@ -23,7 +23,7 @@ WORKDIR /var/www/app
 COPY .env.test /var/www/app/.env
 COPY vhost.conf /etc/apache2/sites-available/000-default.conf 
  
-RUN a2enmod rewrite 
+RUN a2enmod rewrite headers env dir mime authz_host authz_core
  
 RUN chown -R www-data:www-data /var/www/app \ 
     && chmod -R 775 /var/www/app/storage 

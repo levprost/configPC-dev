@@ -25,17 +25,17 @@ const ComponentSelector = ({ categoryName, categoryKey, onSelect }) => {
   }, []);
   useEffect(() => {
     const fetchFilteredComponents = async () => {
-      if (searchTerm) {
-        try {
-          const response = await axios.get(
-            `http://127.0.0.1:8000/api/components/?term=${searchTerm}`
-          );
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/components/?term=${searchTerm}`
+        );
+        if (searchTerm.trim() !== "") {
+          setFilteredComponents(response.data.componentSearch.data || []);
+        } else {
           setFilteredComponents(response.data.components || []);
-        } catch (error) {
-          console.error("Ошибка при поиске компонентов", error);
         }
-      } else {
-        setFilteredComponents(components); // Если строка поиска пуста, показываем все компоненты
+      } catch (error) {
+        console.error("Erreur hors de la récuperation des composant", error);
       }
     };
 
@@ -73,7 +73,7 @@ const ComponentSelector = ({ categoryName, categoryKey, onSelect }) => {
     setSelectedCategory(categoryId); // Définir la catégorie sélectionnée
   };
 
-  const handleClick = (component) => {
+  const handleSelectComponent = (component) => {
     onSelect(component); // Retourner le composant sélectionné au composant parent
   };
 
@@ -96,27 +96,6 @@ const ComponentSelector = ({ categoryName, categoryKey, onSelect }) => {
         }}
       />
 
-      {/* Liste des catégories */}
-      <div>
-        <h6>Sélectionnez une catégorie :</h6>
-        <ul>
-          {categories.map((category) => (
-            <li
-              key={category.id}
-              onClick={() => handleCategoryChange(category.id)}
-              style={{
-                cursor: "pointer",
-                marginBottom: "10px",
-                padding: "10px",
-                backgroundColor:
-                  selectedCategory === category.id ? "#d3d3d3" : "",
-              }}
-            >
-              {category.name}
-            </li>
-          ))}
-        </ul>
-      </div>
 
       {/* Vérification si des composants sont disponibles */}
       {filteredComponents.length === 0 ? (
@@ -124,18 +103,13 @@ const ComponentSelector = ({ categoryName, categoryKey, onSelect }) => {
       ) : (
         <div className="component-list">
           {filteredComponents.map((component) => (
-            <div
-              key={component.id}
-              className="component-card"
-              onClick={() => handleClick(component)}
-              style={{ cursor: "pointer" }}
-            >
+            <div key={component.id} onClick={handleSelectComponent} className="component-card">
               <img
-                src={component.image}
-                alt={component.name}
-                style={{ width: "150px", height: "auto" }}
+                src={component.image_component}
+                alt={component.name_component}
               />
-              <h6>{component.name}</h6>
+              <h3>{component.name_component}</h3>
+              <p>{component.price_component}$</p>
             </div>
           ))}
         </div>
