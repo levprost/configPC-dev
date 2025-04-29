@@ -16,7 +16,7 @@ const Category = () => {
   }, []);
 
   const displayCategory = async () => {
-    await axios.get(`http://127.0.0.1:8000/api/categories?page=${currentPage}`).then((res) => {
+    await axios.get(`${process.env.REACT_APP_API_URL}/categories?page=${currentPage}`).then((res) => {
       setCategory(res.data.data);
       setCurrentPage(res.data.current_page); 
       setTotalPages(res.data.last_page); 

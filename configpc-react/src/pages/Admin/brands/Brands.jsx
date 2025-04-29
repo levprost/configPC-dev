@@ -16,7 +16,7 @@ const Brand = () => {
 
   const displayBrands = async () => {
     await axios
-      .get(`http://127.0.0.1:8000/api/brands?page=${currentPage}`)
+      .get(`${process.env.REACT_APP_API_URL}/brands?page=${currentPage}`)
       .then((res) => {
         setBrands(res.data.data);  // Данные брендов
         setCurrentPage(res.data.current_page);  // Текущая страница
@@ -26,8 +26,8 @@ const Brand = () => {
 
   // Удаление бренда
   const deleteBrand = (id) => {
-    axios.delete(`http://127.0.0.1:8000/api/brands/${id}`).then(() => {
-      displayBrands();  // Перезагружаем данные после удаления
+    axios.delete(`${process.env.REACT_APP_API_URL}/brands/${id}`).then(() => {
+      displayBrands();  
     });
   };
 

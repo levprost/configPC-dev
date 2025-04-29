@@ -13,7 +13,7 @@ const ContactShow = () => {
 
   const displayContact = async (page = 1) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/contacts?page=${page}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/contacts?page=${page}`);
       setContact(response.data.data); 
       setCurrentPage(response.data.current_page); 
       setTotalPages(response.data.last_page); 

@@ -25,7 +25,7 @@ const AddMedia = () => {
     const fetchLastPostId = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/posts/last"
+          `${process.env.REACT_APP_API_URL}/posts/last`
         );
         if (response.data && response.data.id) {
           setPostId(response.data.id);

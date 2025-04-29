@@ -25,7 +25,7 @@ const EditBrand = () => {
   // 🔹 Получаем данные бренда из API
   const getBrand = async () => {
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/api/brands/${brand}`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/brands/${brand}`);
       setNameBrand(res.data.name_brand);
       setDescriptionBrand(res.data.description_brand);
       setColorBrand(res.data.color_brand);
@@ -53,7 +53,7 @@ const EditBrand = () => {
     }
 
     try {
-      await axios.post(`http://127.0.0.1:8000/api/brands/${brand}`, formData, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/brands/${brand}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

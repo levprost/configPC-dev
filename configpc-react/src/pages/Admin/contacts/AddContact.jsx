@@ -35,7 +35,7 @@ const AddContact = () => {
     
 
     await axios
-      .post(`http://127.0.0.1:8000/api/contacts`, formData)
+      .post(`${process.env.REACT_APP_API_URL}/contacts`, formData)
       .then(navigate("/admin/contacts"))
       .catch(({ response }) => {
         if (response.status === 422) {

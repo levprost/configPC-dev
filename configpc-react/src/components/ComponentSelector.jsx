@@ -48,7 +48,7 @@ const ComponentSelector = ({ categoryName, categoryKey, onSelect }) => {
       const fetchComponentsByCategory = async () => {
         try {
           const response = await axios.get(
-            `http://127.0.0.1:8000/api/components/category/${selectedCategory}`
+            `${process.env.REACT_APP_API_URL}/components/category/${selectedCategory}`
           );
           setComponents(response.data.components); // Enregistrer les composants pour la catégorie sélectionnée
           setFilteredComponents(response.data.components); // Filtrer les composants immédiatement

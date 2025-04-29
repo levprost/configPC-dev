@@ -18,7 +18,7 @@ const Home = () => {
 
   const displayPosts = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/posts/order");
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts/order`);
       setPosts(res.data);
     } catch (error) {
       console.error("Erreur d'enrigistrement des posts:", error);
@@ -26,7 +26,7 @@ const Home = () => {
   };
   const displayPostsActual = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/posts/home");
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts/home`);
       console.log(res.data);
       setPostsActual(res.data);
     } catch (error) {
@@ -75,7 +75,7 @@ const Home = () => {
                 <div key={post.id} className="carousel-item">
                   {post.media && post.media.length > 0 ? (
                     <img
-                      src={`http://127.0.0.1:8000/storage/uploads/${post.media[0].media_file}`}
+                      src={`${process.env.REACT_APP_FILE_URL}/${post.media[0].media_file}`}
                       className="d-block carImg"
                       alt={post.title_post}
                     />

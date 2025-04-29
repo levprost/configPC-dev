@@ -16,25 +16,25 @@ const Components = () => {
   }, []);
 
   const displayComponents = async () => {
-      await axios.get("http://127.0.0.1:8000/api/components").then((res) => {
+      await axios.get(`${process.env.REACT_APP_API_URL}/components`).then((res) => {
           setComponents(res.data.components);
           console.log(res.data);
     });
   };
 
   const fetchBrands = async () => {
-    await axios.get("http://127.0.0.1:8000/api/brands").then((res) => {
+    await axios.get(`${process.env.REACT_APP_API_URL}/brands`).then((res) => {
       setBrand(res.data);
     });
   };
   const fetchCategories = async () => {
-    await axios.get("http://127.0.0.1:8000/api/categories").then((res) => {
+    await axios.get(`${process.env.REACT_APP_API_URL}/categories`).then((res) => {
       setCategory(res.data);
     });
   };
 
   const deleteComponent = (id) => {
-    axios.delete(`http://127.0.0.1:8000/api/components/${id}`).then(displayComponents);
+    axios.delete(`${process.env.REACT_APP_API_URL}/components/${id}`).then(displayComponents);
   };
 
   return (

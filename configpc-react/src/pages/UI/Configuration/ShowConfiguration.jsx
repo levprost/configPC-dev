@@ -41,7 +41,7 @@ const ShowConfiguration = () => {
         return;
       }
 
-      const res = await axios.get("http://127.0.0.1:8000/api/currentuser", {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/currentuser`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log(res.data);
@@ -54,7 +54,7 @@ const ShowConfiguration = () => {
   const displayConfig = async () => {
     try {
       const res = await axios.get(
-        `http://127.0.0.1:8000/api/configurations/${configuration}`
+        `${process.env.REACT_APP_API_URL}/configurations/${configuration}`
       );
       setConfigData(res.data.configuration);
       setRatings(res.data.ratings);
@@ -82,7 +82,7 @@ const ShowConfiguration = () => {
       formData.append("user_id", userComment);
 
       await axios.post(
-        "http://127.0.0.1:8000/api/UserConfigurations",
+        `${process.env.REACT_APP_API_URL}/UserConfigurations`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -37,7 +37,7 @@ const AddComponent = () => {
 
   const fetchBrands = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/brands");
+      const res = await axios.get("${process.env.REACT_APP_API_URL}/brands");
       setBrands(res.data);
     } catch (error) {
       console.error("Ошибка загрузки брендов:", error);
@@ -46,7 +46,7 @@ const AddComponent = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/categories");
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/categories`);
       setCategories(res.data);
     } catch (error) {
       console.error("Ошибка загрузки категорий:", error);

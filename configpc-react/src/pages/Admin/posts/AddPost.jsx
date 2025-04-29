@@ -33,17 +33,17 @@ const AddPost = () => {
         return;
       }
 
-      const res = await axios.get("http://127.0.0.1:8000/api/currentuser", {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/currentuser`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      console.log("Ответ сервера:", res.data);
-      setUserPost(res.data.data.user.id); // Проверяем, что приходит
+      console.log("Reponse de serveur:", res.data);
+      setUserPost(res.data.data.user.id); 
     } catch (error) {
       console.error(
-        "Ошибка при получении пользователя:",
+        "Erreur de la récuperation d'utilisateur:",
         error.response || error
       );
     }
@@ -69,7 +69,7 @@ const AddPost = () => {
       formData.append("order_post", orderPost);
 
       const res = await axios.post(
-        `http://127.0.0.1:8000/api/posts`,
+        `${process.env.REACT_APP_API_URL}/posts`,
         formData,
         {
           headers: {

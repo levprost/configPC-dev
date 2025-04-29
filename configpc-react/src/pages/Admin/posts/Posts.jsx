@@ -15,7 +15,7 @@ const Posts = () => {
   }, [currentPage]);
 
   const displayPosts = async () => {
-    await axios.get(`http://127.0.0.1:8000/api/posts?page=${currentPage}`)
+    await axios.get(`${process.env.REACT_APP_API_URL}/posts?page=${currentPage}`)
       .then((res) => {
         console.log(res.data);  
         setPosts(res.data.data); 
@@ -26,7 +26,7 @@ const Posts = () => {
   
 
   const deletePost = (id) => {
-    axios.delete(`http://127.0.0.1:8000/api/posts/${id}`).then(displayPosts);
+    axios.delete(`${process.env.REACT_APP_API_URL}/posts/${id}`).then(displayPosts);
     displayPosts();
   };
   const handlePageChange = (page) => {

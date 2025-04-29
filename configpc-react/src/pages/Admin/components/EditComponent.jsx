@@ -40,7 +40,7 @@ const EditComponent = () => {
   const fetchComponent = async () => {
     try {
       const res = await axios.get(
-        `http://127.0.0.1:8000/api/components/${component}`
+        `${process.env.REACT_APP_API_URL}/components/${component}`
       );
       setNameComponent(res.data.component.name_component);
       setSubtitleComponent(res.data.component.subtitle_component);

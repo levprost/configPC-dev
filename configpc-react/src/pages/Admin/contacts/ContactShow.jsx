@@ -18,7 +18,7 @@ const Contact = () => {
     const fetchContact = async () => {
       try {
         const res = await axios.get(
-          `http://127.0.0.1:8000/api/contacts/${contact}`
+          `${process.env.REACT_APP_API_URL}/contacts/${contact}`
         );
         setSubjectContact(res.data.subject_contact);
         setEmailContact(res.data.email_contact);

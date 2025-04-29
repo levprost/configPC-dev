@@ -41,7 +41,7 @@ const CalculateConfiguration = () => {
 
   const fetchComponents = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/components");
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/components`);
       console.log("Réponse de l'API:", res.data);
       if (Array.isArray(res.data.components)) {
         setComponents(res.data.components);
@@ -58,7 +58,7 @@ const CalculateConfiguration = () => {
   const searchComponents = async (term) => {
     try {
       const res = await axios.get(
-        `http://127.0.0.1:8000/api/components?term=${term}`
+        `${process.env.REACT_APP_API_URL}/components?term=${term}`
       );
       if (Array.isArray(res.data.componentSearch)) {
         setFilteredComponents(res.data.componentSearch);

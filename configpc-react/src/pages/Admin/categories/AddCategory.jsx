@@ -22,7 +22,7 @@ const AddCategory = () => {
 
     formData.append("name_category", nameCategory);
     await axios
-      .post(`http://127.0.0.1:8000/api/categories`, formData)
+      .post(`${process.env.REACT_APP_API_URL}/categories`, formData)
       .then(navigate("/admin/categories"))
       .catch(({ response }) => {
         if (response.status === 422) {

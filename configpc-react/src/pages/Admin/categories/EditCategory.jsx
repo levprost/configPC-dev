@@ -24,7 +24,7 @@ const EditCategory = () => {
 
   const getCategory = async () => {
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/api/categories/${category}`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/categories/${category}`);
       setNameCategory(res.data.name_category);
     } catch (error) {
       console.log("Error not loading category:", error);

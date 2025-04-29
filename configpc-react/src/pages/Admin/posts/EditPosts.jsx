@@ -40,7 +40,7 @@ const EditPost = () => {
   }, []);
   const getPost = async () => {
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/api/posts/${post}`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts/${post}`);
       setTitlePost(res.data.title_post);
       setContent1Post(res.data.content_post);
       setContent2Post(res.data.content_post_1);
@@ -96,7 +96,7 @@ const EditPost = () => {
     formData.append("post_id", postId);
 
     try {
-      await axios.post("http://127.0.0.1:8000/api/media", formData, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/media`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       getPost(); 
@@ -126,7 +126,7 @@ const EditPost = () => {
       formData.append("_method", "PUT");
 
       await axios.post(
-        `http://127.0.0.1:8000/api/posts/${post}`,
+        `${process.env.REACT_APP_API_URL}i/posts/${post}`,
         formData,
         {
           headers: {
@@ -148,7 +148,7 @@ const EditPost = () => {
 
   const handleDeleteMedia = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/media/${id}`).then(getPost);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/media/${id}`).then(getPost);
       console.log("Média supprimé avec succès !");
     } catch (error) {
       console.error("Erreur lors de la suppression du média:", error);

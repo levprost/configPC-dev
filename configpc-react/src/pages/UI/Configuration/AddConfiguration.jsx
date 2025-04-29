@@ -77,7 +77,7 @@ const AddConfiguration = () => {
   //Upload all components from API
   const fetchComponents = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/components");
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/components`);
       console.log("Réponse de l'API:", res.data);
       if (Array.isArray(res.data.components)) {
         setComponents(res.data.components); //we put data in variable components
@@ -130,7 +130,7 @@ const AddConfiguration = () => {
   const searchComponents = async (term) => {
     try {
       const res = await axios.get(
-        `http://127.0.0.1:8000/api/components?term=${term}`
+        `${process.env.REACT_APP_API_URL}/components?term=${term}`
       );
       if (Array.isArray(res.data.componentSearch)) {
         setFilteredComponents(res.data.componentSearch);
@@ -150,7 +150,7 @@ const AddConfiguration = () => {
         return;
       }
 
-      const res = await axios.get("http://127.0.0.1:8000/api/currentuser", {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/currentuser`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log(res.data);
@@ -169,7 +169,7 @@ const AddConfiguration = () => {
   const getComponent = async () => {
     try {
       const res = await axios.get(
-        `http://127.0.0.1:8000/api/components/${component}`
+        `${process.env.REACT_APP_API_URL}/components/${component}`
       );
       setNameComponent(res.data.name_component);
       setPriceComponent(res.data.price_component);
@@ -209,7 +209,7 @@ const AddConfiguration = () => {
       });
 
       // Send the configuration data via POST request
-      await axios.post("http://127.0.0.1:8000/api/configurations", formData, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/configurations`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

@@ -32,7 +32,7 @@ RUN chown -R www-data:www-data /var/www/app \
 # Configurer la variable d'environnement 
 ENV COMPOSER_ALLOW_SUPERUSER=1 
 COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer 
- 
+RUN ln -s /var/www/app/storage/app/public /var/www/app/public/storage
 # Installation des dependences
 COPY composer.json ./ 
 RUN composer install
