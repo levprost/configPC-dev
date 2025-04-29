@@ -1,0 +1,27 @@
+.mainConfig{
+    background-color: rgb(54, 54, 54);
+}
+h2{
+    color: rgb(255, 255, 255) !important;
+    font-family: "Cascadia Mono", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.component-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .component-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    transition: 0.3s;
+  }
+  
+  .component-card:hover {
+    background-color: #f0f0f0;
+  }

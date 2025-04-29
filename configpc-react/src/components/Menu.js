@@ -7,7 +7,6 @@ import ButtonNav from "./constructs/ButtonNav";
 import "./../styles/css/navbar.css";
 import "./../styles/css/button.css";
 import "./../styles/css/buttonNav.css";
-import { IoMdExit } from "react-icons/io";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -41,25 +40,7 @@ const Navbar = () => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await axios.post(
-        "http://127.0.0.1:8000/api/logout",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        }
-      );
-    } catch (error) {
-      console.error("Erreur lors de la déconnexion:", error);
-    }
-
-    localStorage.removeItem("access_token");
-    setUser(null);
-    navigate("/");
-  };
+ 
 
   return (
     <div className="navigation">
@@ -82,7 +63,7 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
-                <a href="">
+                <a href="/addconfiguration">
                 <ButtonNav
                   text="Configurations"
                   variant="hsl(0, 0.00%, 100.00%)"

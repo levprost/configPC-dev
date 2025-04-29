@@ -158,7 +158,7 @@ const Home = () => {
                     </div>
                     <div className="col-md-8">
                       <div className="card-body cardBodyPost">
-                        <h5 className="card-title">{post.title_post}</h5>
+                        <h5 className="card-title">{post.title_post.length > 2 ? `${post.title_post.substring(0, 20)}` : post.title_post}</h5>
                         <p className="card-text">
                           {post.description_post.length > 100
                             ? `${post.description_post.substring(0, 100)}...`

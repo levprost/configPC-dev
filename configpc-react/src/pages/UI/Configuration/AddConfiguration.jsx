@@ -10,6 +10,8 @@ import {
 import { FaTrash } from "react-icons/fa";
 import axios from "axios";
 import Menu from "../../../components/Menu";
+import "./../../../styles/css/configadd.css";
+import ComponentSelector from "../../../components/ComponentSelector";
 
 const AddConfiguration = () => {
   //=========Configuration========
@@ -40,6 +42,18 @@ const AddConfiguration = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredComponents, setFilteredComponents] = useState([]);
   const [chosenComponents, setChosenComponents] = useState([]);
+
+  //==========State of components=========
+  // Selected components by category
+  const [selectedGPU, setSelectedGPU] = useState(null);
+  const [selectedMotherboard, setSelectedMotherboard] = useState(null);
+  const [selectedCPU, setSelectedCPU] = useState(null);
+  const [selectedPower, setSelectedPower] = useState(null);
+  const [selectedRAM, setSelectedRAM] = useState(null);
+  const [selectedStorage, setSelectedStorage] = useState(null);
+  const [selectedCase, setSelectedCase] = useState(null);
+
+  const [currentStep, setCurrentStep] = useState("GPU");
 
   useEffect(() => {
     fetchUser();
@@ -77,6 +91,41 @@ const AddConfiguration = () => {
     }
   };
 
+  //Function to handle search input change
+  const handleSelectComponent = (component) => {
+    switch (currentStep) {
+      case "GPU":
+        setSelectedGPU(component);
+        setCurrentStep("Motherboard");
+        break;
+      case "Motherboard":
+        setSelectedMotherboard(component);
+        setCurrentStep("CPU");
+        break;
+      case "CPU":
+        setSelectedCPU(component);
+        setCurrentStep("Power Supply");
+        break;
+      case "Power Supply":
+        setSelectedPower(component);
+        setCurrentStep("RAM");
+        break;
+      case "RAM":
+        setSelectedRAM(component);
+        setCurrentStep("Storage");
+        break;
+      case "Storage":
+        setSelectedStorage(component);
+        setCurrentStep("Case");
+        break;
+      case "Case":
+        setSelectedCase(component);
+        break;
+      default:
+        break;
+    }
+  };
+
   //Search system from api with key term
   const searchComponents = async (term) => {
     try {
@@ -104,7 +153,7 @@ const AddConfiguration = () => {
       const res = await axios.get("http://127.0.0.1:8000/api/currentuser", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(res.data)
+      console.log(res.data);
       setUserId(res.data.data.user.id);
     } catch (error) {
       console.error("Erreur lors de la récupération de l'utilisateur:", error);
@@ -112,20 +161,6 @@ const AddConfiguration = () => {
   };
 
   // Function to handle component selection
-  const handleChooseComponent = (comp) => {
-    if (!comp || !comp.id) {
-      console.error("Component not found");
-      console.log(comp);
-      return; 
-    }
-
-
-    if (selectedComponents.some((component) => component.id === comp.id)) {
-      return; 
-    }
-
-    setSelectedComponents([...selectedComponents, comp]);
-  };
 
   // Function to remove a selected component
   const removeChosenComponent = (id) => {
@@ -191,14 +226,19 @@ const AddConfiguration = () => {
   };
 
   return (
-    <>
+    <div className="g-0 mainConfig">
       <Menu />
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-12 col-sm-12 col-md-6">
+      <div className="container mt-5">
+        <h2 className="text-center mb-4">Ajouter une configuration</h2>
+
+        <div className="row">
+          {/* Левая колонка - Форма */}
+          <div className="col-12 col-md-6">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Ajout d'une configuration</h4>
+                <h4 className="card-title">
+                  Informations sur la configuration
+                </h4>
                 <hr />
                 {Object.keys(validationError).length > 0 && (
                   <div className="alert alert-danger">
@@ -209,7 +249,7 @@ const AddConfiguration = () => {
                     </ul>
                   </div>
                 )}
-                <Form onSubmit={addConfiguration}>
+                <Form>
                   <Form.Group controlId="nameConfig">
                     <Form.Label>Nom de la configuration</Form.Label>
                     <Form.Control
@@ -220,7 +260,7 @@ const AddConfiguration = () => {
                     />
                   </Form.Group>
 
-                  <Form.Group controlId="titleConfig">
+                  <Form.Group controlId="titleConfig" className="mt-3">
                     <Form.Label>Titre</Form.Label>
                     <Form.Control
                       type="text"
@@ -230,7 +270,7 @@ const AddConfiguration = () => {
                     />
                   </Form.Group>
 
-                  <Form.Group controlId="subtitleConfig">
+                  <Form.Group controlId="subtitleConfig" className="mt-3">
                     <Form.Label>Sous-titre</Form.Label>
                     <Form.Control
                       type="text"
@@ -240,7 +280,7 @@ const AddConfiguration = () => {
                     />
                   </Form.Group>
 
-                  <Form.Group controlId="descriptionConfig">
+                  <Form.Group controlId="descriptionConfig" className="mt-3">
                     <Form.Label>Description</Form.Label>
                     <Form.Control
                       as="textarea"
@@ -251,7 +291,7 @@ const AddConfiguration = () => {
                     />
                   </Form.Group>
 
-                  <Form.Group controlId="explicationConfig">
+                  <Form.Group controlId="explicationConfig" className="mt-3">
                     <Form.Label>Explication</Form.Label>
                     <Form.Control
                       as="textarea"
@@ -261,109 +301,118 @@ const AddConfiguration = () => {
                       required
                     />
                   </Form.Group>
-
-                  <Form.Group controlId="imageConfig">
-                    <Form.Label>Image</Form.Label>
-                    <Form.Control
-                      type="file"
-                      onChange={(e) => setImageConfig(e.target.files[0])}
-                    />
-                  </Form.Group>
-
-                  <Form.Group controlId="benchmarkConfig">
-                    <Form.Label>Benchmark</Form.Label>
-                    <Form.Control
-                      type="file"
-                      onChange={(e) => setBenchmarkConfig(e.target.files[0])}
-                    />
-                  </Form.Group>
-                  <div className="search-component-container">
-
-                    <Form.Group controlId="searchComponent">
-                      <Form.Label>Rechercher un composant</Form.Label>
-                      <InputGroup>
-                        <Form.Control
-                          type="text"
-                          placeholder="Entrez le nom du composant..."
-                          value={searchTerm}
-                          onChange={(e) => setSearchTerm(e.target.value)}
-                          onFocus={() => setShowResults(true)}
-                          onBlur={() =>
-                            setTimeout(() => setShowResults(false), 200)
-                          } 
-                        />
-                      </InputGroup>
-                    </Form.Group>
-
-                    {showResults && filteredComponents.length > 0 && (
-                      <ListGroup className="position-absolute w-100 mt-1 shadow-sm rounded">
-                        {filteredComponents.map((comp) => (
-                          <ListGroup.Item
-                            key={comp.id}
-                            action
-                            onClick={() => handleChooseComponent(comp)} 
-                            className="result-item"
-                          >
-                            <div className="d-flex justify-content-between">
-                              <span>{comp.name_component}</span>
-                              <span>{comp.price_component}€</span>
-                            </div>
-                          </ListGroup.Item>
-                        ))}
-                      </ListGroup>
-                    )}
-
-                    {/* Выбранные компоненты */}
-                    {selectedComponents.length > 0 && (
-                      <div className="mt-3">
-                        <h5>Composants sélectionnés :</h5>
-                        <ListGroup className="selected-components-list">
-                          {selectedComponents.map((comp) => (
-                            <ListGroup.Item
-                              key={comp.id}
-                              className="d-flex justify-content-between align-items-center"
-                            >
-                              <span>
-                                {comp.name_component} - {comp.price_component}€
-                              </span>
-                              <OverlayTrigger
-                                placement="top"
-                                overlay={
-                                  <Tooltip id={`tooltip-remove-${comp.id}`}>
-                                    Supprimer
-                                  </Tooltip>
-                                }
-                              >
-                                <Button
-                                  variant="danger"
-                                  size="sm"
-                                  onClick={() => removeChosenComponent(comp.id)}
-                                  className="remove-btn"
-                                >
-                                  <FaTrash/>{" "}
-                                </Button>
-                              </OverlayTrigger>
-                            </ListGroup.Item>
-                          ))}
-                        </ListGroup>
-                      </div>
-                    )}
-                  </div>
-                  <Button
-                    variant="primary"
-                    className="mt-3 w-100"
-                    size="lg"
-                    type="submit"
-                  >
-                    Ajouter la configuration
-                  </Button>
                 </Form>
               </div>
             </div>
           </div>
+
+          {/* Правая колонка - Выбор компонентов */}
+          <div className="col-12 col-md-6 mt-4 mt-md-0">
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Sélectionner les composants</h4>
+                <div>
+                  <div className="configuration-steps">
+                    {currentStep === "GPU" && (
+                      <ComponentSelector
+                        categoryName="Выберите видеокарту (GPU)"
+                        categoryKey="gpu"
+                        components={filteredComponents.filter(
+                          (c) => c.category_id === 1
+                        )} // Подставь ID категории для GPU
+                        onSelect={handleSelectComponent}
+                      />
+                    )}
+
+                    {currentStep === "Motherboard" && (
+                      <ComponentSelector
+                        categoryName="Выберите материнскую плату (Motherboard)"
+                        categoryKey="motherboard"
+                        components={filteredComponents.filter(
+                          (c) => c.category_id === 2
+                        )}
+                        onSelect={handleSelectComponent}
+                      />
+                    )}
+
+                    {currentStep === "CPU" && (
+                      <ComponentSelector
+                        categoryName="Выберите процессор (CPU)"
+                        categoryKey="cpu"
+                        components={filteredComponents.filter(
+                          (c) => c.category_id === 3
+                        )}
+                        onSelect={handleSelectComponent}
+                      />
+                    )}
+
+                    {currentStep === "Power Supply" && (
+                      <ComponentSelector
+                        categoryName="Выберите блок питания (Power Supply)"
+                        categoryKey="power"
+                        components={filteredComponents.filter(
+                          (c) => c.category_id === 4
+                        )}
+                        onSelect={handleSelectComponent}
+                      />
+                    )}
+
+                    {currentStep === "RAM" && (
+                      <ComponentSelector
+                        categoryName="Выберите оперативную память (RAM)"
+                        categoryKey="ram"
+                        components={filteredComponents.filter(
+                          (c) => c.category_id === 5
+                        )}
+                        onSelect={handleSelectComponent}
+                      />
+                    )}
+
+                    {currentStep === "Storage" && (
+                      <ComponentSelector
+                        categoryName="Выберите диск (Storage)"
+                        categoryKey="storage"
+                        components={filteredComponents.filter(
+                          (c) => c.category_id === 6
+                        )}
+                        onSelect={handleSelectComponent}
+                      />
+                    )}
+
+                    {currentStep === "Case" && (
+                      <ComponentSelector
+                        categoryName="Выберите корпус (Case)"
+                        categoryKey="case"
+                        components={filteredComponents.filter(
+                          (c) => c.category_id === 7
+                        )}
+                        onSelect={handleSelectComponent}
+                      />
+                    )}
+                  </div>
+                </div>
+                <hr />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Кнопка отправки */}
+        <div className="row mt-4">
+          <div className="col-12">
+            <Button
+              variant="primary"
+              className="w-100"
+              size="lg"
+              type="submit"
+              onClick={addConfiguration}
+            >
+              Ajouter la configuration
+            </Button>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -41,7 +41,7 @@
   font-weight: 1200;
   text-align: top;
 }
-/* posts cards styles */
+/* =============POSTS CARDS STYLES========== */
 .titleSection1{
   color:white;
 }
@@ -71,6 +71,12 @@
   box-shadow: 0px 0px 15px rgb(32, 32, 32);
   transform: scale(1.05);
 }
+.card-title{
+  color: rgb(255, 255, 255);
+  font-family: "Cascadia Mono", sans-serif;
+  white-space: nowrap;
+}
+
 .strictLine{
   color:rgb(196, 196, 196);
 }
@@ -94,6 +100,13 @@
 }
 .card-text{
   color: rgb(255, 255, 255);
+  max-height: 4.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  --webkit-line-clamp: 3; /* Обрезать после 3-х строк */
+  --webkit-box-orient: vertical;
+  
 }
 .card-title{
   color: rgb(255, 255, 255) !important;
@@ -111,8 +124,35 @@
   align-self: flex-end;
 }
 
+@media(max-width:1075px){
+  .btn-default12{
+    font-size: medium;
+  }
+  .card-title{
+    color: rgb(255, 255, 255);
+    font-family: "Cascadia Mono", sans-serif;
+    white-space: nowrap;
+    font-size: 18px;
+    --webkit-line-clamp: 1;
+
+  }
+  .card-text{
+    color: rgb(255, 255, 255);
+    overflow: hidden;
+    display: -webkit-box;
+    font-size: 14px;
+
+  }
+}
 @media (max-width: 768px) {
   
+  .card-title{
+    color: rgb(255, 255, 255);
+    font-family: "Cascadia Mono", sans-serif;
+    white-space: nowrap;
+    font-size: 22px;
+    
+  }
   .cardBodyPost{
     height: 100%;
   }

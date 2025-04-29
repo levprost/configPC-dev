@@ -10,6 +10,7 @@ import {
   Image
 } from "react-bootstrap";
 import Menu from "../../../components/Menu";
+import ComponentSelector from "../../../components/ComponentSelector";
 
 const CalculateConfiguration = () => {
   const [components, setComponents] = useState([]);
