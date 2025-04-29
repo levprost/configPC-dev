@@ -33,7 +33,7 @@ const AddBrand = () => {
     formData.append("description_brand", descriptionBrand);
     formData.append("color_brand", colorBrand);
     await axios
-      .post(`http://127.0.0.1:8000/api/brands`, formData)
+      .post(`${process.env.REACT_APP_API_URL}/brands`, formData)
       .then(navigate("/admin/brands"))
       .catch(({ response }) => {
         if (response.status === 422) {
