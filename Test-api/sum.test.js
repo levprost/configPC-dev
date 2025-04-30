@@ -168,6 +168,7 @@ describe("Posts DELETE", () => {
     // before
     const deleteRes = await Axios.delete("/posts/" + post.id);
     // after
+    //comments
     
     expect(deleteRes.status).toBe(200);
     expect(deleteRes.data.message).toBe("Post deleted successfully.");
