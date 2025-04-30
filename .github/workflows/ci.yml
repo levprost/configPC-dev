@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Tests-api
+        working-directory: Test-api
     steps:
     - name: Checkout
       uses: actions/checkout@v1
