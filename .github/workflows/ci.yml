@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies
       run: npm install
     - name: install jest v1
-      run: jest install -g jest
+      run: install -g jest
     - name: Run tests
       run: npm run test
     # This workflow configuration file defines the CI (Continuous Integration) pipeline.
