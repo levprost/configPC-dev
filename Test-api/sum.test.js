@@ -1,10 +1,10 @@
-const { expect, describe } = require("@jest/globals");
-const axios = require("axios", "await");
+const axios = require('axios');
+const { expect } = require('@jest/globals');
 
 const Axios = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: 'http://localhost:8000/api',
   headers: {
-    Accept: "application/json",
+    Accept: 'application/json',
   },
 });
 
@@ -169,7 +169,7 @@ describe("Posts DELETE", () => {
     const deleteRes = await Axios.delete("/posts/" + post.id);
     // after
     //comments
-    
+
     expect(deleteRes.status).toBe(200);
     expect(deleteRes.data.message).toBe("Post deleted successfully.");
   });
