@@ -20,3 +20,5 @@ services:
       MYSQL_DATABASE: configpc
     ports:
       - 3306:3306
+    volumes:
+      - /datadir:/var/lib/mysql
