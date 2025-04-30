@@ -6,8 +6,6 @@
 /storage/*.key
 /storage/pail
 /vendor
-/database/factories/UserFactory.php
-/database/seeders/UserSeeder.php
 .env
 .env.backup
 .env.production
