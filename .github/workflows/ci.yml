@@ -14,30 +14,24 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
-
-    - name: Install Docker Compose
+    - name: Install Docker
       uses: hoverkraft-tech/compose-action@v2.0.1
-
-    - name: Start docker-compose
-      run: docker-compose up -d
-
-    - name: Sleep to ensure containers are ready
-      run: sleep 10
-
-    - name: Migrate and seed database
-      run: docker exec laravel-docker bash -c "php artisan migrate:fresh --seed"
-
-    - name: Show Laravel logs on failure
-      if: failure()
-      run: docker exec laravel-docker bash -c "cat storage/logs/laravel.log || true"
-
-    - name: Install Node.js
+    - name: Sleep for 10 seconds
+      run: sleep 10s
+      shell: bash
+    - name: Database migrate
+      run: docker exec laravel-docker bash -c "php artisan migrate"
+    - name: Database seeding
+      run: docker exec laravel-docker bash -c "php artisan db:seed"
+    - name: Install node
       uses: actions/setup-node@v3
       with:
         node-version: 20.x
-
     - name: Install dependencies
       run: npm install
-
+    - name: install jest v1
+      run: npm install -g jest
     - name: Run tests
-      run: npm test
+      run: npm run test
+    # This workflow configuration file defines the CI (Continuous Integration) pipeline.
+    # It is located in the .github/workflows directory and is triggered by changes in the repository.
