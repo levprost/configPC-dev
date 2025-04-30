@@ -4,6 +4,8 @@ services:
     build: ./configPC-laravel
     ports:
       - 8000:80
+    volumes:
+      - ~/storage:/var/www/app/storage
 
   vue-docker:
     container_name: vue-docker
