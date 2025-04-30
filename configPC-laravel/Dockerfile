@@ -28,7 +28,7 @@ RUN a2enmod rewrite headers env dir mime authz_host authz_core
 RUN chown -R www-data:www-data /var/www/app \ 
     && chmod -R 775 /var/www/app/storage 
  
-RUN chown -R www-data::www-data /var/www/app/storage
+RUN chown -R www-data:www-data /var/www/app/storage
 # Installation de composer
 # Configurer la variable d'environnement 
 ENV COMPOSER_ALLOW_SUPERUSER=1 
