@@ -31,3 +31,5 @@ jobs:
       run: npm install
     - name: Run tests
       run: npm run test
+    # This workflow configuration file defines the CI (Continuous Integration) pipeline.
+    # It is located in the .github/workflows directory and is triggered by changes in the repository.
