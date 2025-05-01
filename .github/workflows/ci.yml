@@ -1,9 +1,10 @@
 name: configpc-app
 
-on: # specify the build to trigger the automated ci/cd
+on:
   push:
     branches:
       - "main"
+
 jobs:
   docker:
     timeout-minutes: 10
@@ -11,30 +12,47 @@ jobs:
     defaults:
       run:
         working-directory: Test-api
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - name: Install Docker
-      uses: hoverkraft-tech/compose-action@v2.2.0
-    - name: Sleep for 10 seconds
-      run: sleep 10s
-      shell: bash
-    - name: Migrate and seed
-      run: docker exec laravel-docker php artisan migrate:fresh --seed
-    - name: Database seeding
-      run: docker exec laravel-docker bash -c "php artisan db:seed"
-    - name: Install node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20.x
-    - name: Install dependencies
-      run: npm install
-    - name: install jest v1
-      run: npm install -g jest
-    - name: Run tests
-      run: npm run test 
-    - name: Show Laravel logs on failure
-      if: failure()
-      run: docker exec laravel-docker cat storage/logs/laravel.log || true
-    # This workflow configuration file defines the CI (Continuous Integration) pipeline.
-    # It is located in the .github/workflows directory and is triggered by changes in the repository.
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Install Docker
+        uses: hoverkraft-tech/compose-action@v2.2.0
+
+      - name: Sleep for 10 seconds
+        run: sleep 10s
+        shell: bash
+
+      - name: Migrate and seed
+        run: docker exec laravel-docker php artisan migrate:fresh --seed
+
+      - name: Wait for Laravel to be ready
+        run: |
+          for i in {1..10}; do
+            if curl -s http://localhost:8000/api/login | grep -q "Unauthorized"; then
+              echo "Laravel is up!"
+              break
+            else
+              echo "Waiting for Laravel to be ready..."
+              sleep 3
+            fi
+          done
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Jest
+        run: npm install -g jest
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Show Laravel logs on failure
+        if: failure()
+        run: docker exec laravel-docker cat storage/logs/laravel.log || true
