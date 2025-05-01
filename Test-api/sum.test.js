@@ -8,8 +8,28 @@ const Axios = axios.create({
   },
 });
 
-const user = {};
+let user = {};
+let userNotOwner = {};
+let adminUser = {};
+let newUser = {};
+// ------------------------------------------------------------------------------
 
+beforeAll(async () => {
+  await login(user, {
+    email: "edit@truc.fr",
+    password: "test123",
+  });
+
+  await login(userNotOwner, {
+    email: "user@truc.fr",
+    password: "test123",
+  });
+
+  await login(adminUser, {
+    email: "admin@truc.fr",
+    password: "test123",
+  });
+});
 describe("User Login with JWT", () => {
   test("Vérification de l'authentification via JWT", async () => {
     try {
@@ -23,7 +43,7 @@ describe("User Login with JWT", () => {
       expect(res.status).toBe(200);
     } catch (error) {
       console.error("Error during JWT login:", error);
-      throw error; // Re-throw the error to fail the test
+      throw error; 
     }
   });
 });
@@ -44,10 +64,18 @@ async function login(user, credentials) {
 
   return res;
 }
-describe("User Login", () => {
+describe("Admin Login", () => {
   test("Vérification de l'authentification", async () => {
-    await login(user, {
+    await login(adminUser, {
       email: "admin@truc.fr",
+      password: "test123",
+    });
+  });
+});
+describe("userNotOwner Login", () => {
+  test("Vérification de l'authentification", async () => {
+    await login(userNotOwner, {
+      email: "user@truc.fr",
       password: "test123",
     });
   });
@@ -58,8 +86,8 @@ async function register(dataReg) {
 describe("User Register", () => {
     test("Vérification de l'inscription", async () => {
       const dataReg = {
-        nick_name: "test52",
-        email: "test52@mail.com",
+        nick_name: "test520",
+        email: "test520@mail.com",
         password: "test123",
         password_confirmation: "test123",
       };
@@ -67,8 +95,8 @@ describe("User Register", () => {
       const resReg = await register(dataReg);
 
       expect(resReg.status).toBe(200);
-      expect(resReg.data.data.user.email).toBe("test52@mail.com");
-      expect(resReg.data.data.user.nick_name).toBe("test52");
+      expect(resReg.data.data.newUser.email).toBe("test520@mail.com");
+      expect(resReg.data.data.newUser.nick_name).toBe("test520");
   });
 });
 describe("Posts GET", () => {
@@ -134,11 +162,13 @@ describe("Posts PUT", () => {
     content_post_1: "content_test_1",
     subtitle_post: "subtitle_post",
     is_published: false,
-    _method: "PUT",
+    "_method": "PUT",
   }) => {
     const res = await Axios.get("/posts/");
 
     const post = res.data.data.find((p) => p.user_id == user.id);
+    console.log(post);
+    console.log(user);
 
     const updateRes = await Axios.post("/posts/" + post.id, data);
     expect(updateRes.status).toBe(200);
@@ -154,7 +184,7 @@ describe("Posts PUT", () => {
     _method: "PUT",
   }) => {
     const res = await Axios.get("/posts");
-    const post = res.data.data.find((p) => p.user_id != user.id);
+    const post = res.data.data.find((p) => p.user_id != userNotOwner.id);
     const updateRes = await Axios.post("/posts/" + post.id, data, {
       validateStatus: () => true,
     });
@@ -186,20 +216,20 @@ describe("Posts DELETE", () => {
       validateStatus: () => true,
     });
     
-    expect(deleteRes.status).toBe(200);
-    expect(deleteRes.data.message).toBe("You are not authorized to delete this post.");
+    expect(deleteRes.status).toBe(403);
   });
 });
+
 describe("Admin Login", () => {
   test("Vérification de l'authentification", async () => {
     try {
-      await login(user, {
+      await login(adminUser, {
         email: 'admin@truc.fr',
         password: 'test123'
       });
     } catch (error) {
       console.error("Error during admin login:", error);
-      throw error; // Re-throw the error to fail the test
+      throw error; 
     }
   });
 });
@@ -226,7 +256,7 @@ describe("Posts PUT", () => {
 describe("Admin Posts DELETE", () => {
   test("Delete as admin", async () => {
     const old = await Axios.get('/posts');
-    const post = old.data.data.find(p => p.user_id != user.id);
+    const post = old.data.data.find(p => p.user_id != adminUser.id);
     // before
     const deleteRes = await Axios.delete('/posts/' + post.id);
     // after

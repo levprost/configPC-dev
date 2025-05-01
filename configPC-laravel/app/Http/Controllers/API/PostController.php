@@ -89,7 +89,7 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $user = auth()->user();
-        if (!$user || ($post->user_id !== $user->id && $user->role !== 'ROLE_ADMIN')) {
+        if ((int)$post->user_id !== (int)$user->id && $user->role !== 'ROLE_ADMIN') {
             return response()->json(['error' => 'Action non autorisée'], 403);
         }
 
