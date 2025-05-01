@@ -12,16 +12,19 @@ const user = {};
 
 describe("User Login with JWT", () => {
   test("Vérification de l'authentification via JWT", async () => {
-    const res = await login(user, {
-      email: "edit@truc.fr",
-      password: "test123",
-    });
+    try {
+      const res = await login(user, {
+        email: "edit@truc.fr",
+        password: "test123",
+      });
 
-    expect(user.token).toBeDefined();
-
-    expect(user.email).toBe("edit@truc.fr");
-
-    expect(res.status).toBe(200);
+      expect(user.token).toBeDefined();
+      expect(user.email).toBe("edit@truc.fr");
+      expect(res.status).toBe(200);
+    } catch (error) {
+      console.error("Error during JWT login:", error);
+      throw error; // Re-throw the error to fail the test
+    }
   });
 });
 
@@ -189,10 +192,15 @@ describe("Posts DELETE", () => {
 });
 describe("Admin Login", () => {
   test("Vérification de l'authentification", async () => {
-    await login(user, {
-      email: 'admin@truc.fr',
-      password: 'test123'
-    });
+    try {
+      await login(user, {
+        email: 'admin@truc.fr',
+        password: 'test123'
+      });
+    } catch (error) {
+      console.error("Error during admin login:", error);
+      throw error; // Re-throw the error to fail the test
+    }
   });
 });
 
