@@ -174,7 +174,7 @@ describe("Posts DELETE", () => {
     //comments
 
     expect(deleteRes.status).toBe(200);
-    expect(deleteRes.data.message).toBe("Post deleted successfully.");
+    expect(deleteRes.data.data.message).toBe("Post deleted successfully.");
   });
 
   test("Delete as not user owner", async () => {
