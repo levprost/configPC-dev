@@ -15,14 +15,16 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'nick_name' => 'Administrateur',
-            'role' => 'ROLE_ADMIN',
-            'email' => 'admin@truc.fr',
-            'email_verified_at' => now(),
-            'password' => Hash::make('test123'),
-            'remember_token' => Str::random(10)
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@truc.fr'],
+            [
+                'nick_name' => 'Administrateur',
+                'role' => 'ROLE_ADMIN',
+                'email_verified_at' => now(),
+                'password' => Hash::make('test123'),
+                'remember_token' => Str::random(10)
+            ]
+        );
         User::factory()->create([
             'nick_name' => 'Editeur',
             'role' => 'ROLE_EDITOR',
