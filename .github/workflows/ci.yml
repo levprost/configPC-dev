@@ -15,7 +15,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
     - name: Install Docker
-      uses: hoverkraft-tech/compose-action@v2.0.1
+      uses: hoverkraft-tech/compose-action@v2.2.0
     - name: Sleep for 10 seconds
       run: sleep 10s
       shell: bash
@@ -32,6 +32,6 @@ jobs:
     - name: install jest v1
       run: npm install -g jest
     - name: Run tests
-      run: npm run test
+      run: npm run test 
     # This workflow configuration file defines the CI (Continuous Integration) pipeline.
     # It is located in the .github/workflows directory and is triggered by changes in the repository.
