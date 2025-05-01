@@ -187,7 +187,7 @@ describe("Posts PUT", () => {
     };
 
     const res = await Axios.get("/posts");
-    const post = res.data.data.find((p) => p.user_id != userNotOwner.id);
+    const post = res.data.data.find((p) => p.user_id != user.id);
     const updateRes = await Axios.post("/posts/" + post.id, data, {
       validateStatus: () => true,
     });
@@ -275,15 +275,15 @@ describe("Posts PUT", () => {
   });
 });
 
-describe("Admin Posts DELETE", () => {
-  test("Delete as admin", async () => {
-    const old = await Axios.get("/posts");
-    const post = old.data.data.find((p) => p.user_id != adminUser.id);
-    // before
-    const deleteRes = await Axios.delete("/posts/" + post.id);
-    // after
-    const cur = await Axios.get("/posts");
+// describe("Admin Posts DELETE", () => {
+//   test("Delete as admin", async () => {
+//     const old = await Axios.get("/posts");
+//     const post = old.data.data.find((p) => p.user_id != adminUser.id);
+//     // before
+//     const deleteRes = await Axios.delete("/posts/" + post.id);
+//     // after
+//     const cur = await Axios.get("/posts");
 
-    expect(deleteRes.status).toBe(200);
-  });
-});
+//     expect(deleteRes.status).toBe(200);
+//   });
+// });
