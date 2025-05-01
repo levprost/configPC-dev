@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -88,7 +89,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        
+        $this->authorize('update', $post);
         $formFields = $request->validate([
             'title_post' => 'sometimes|string',
             'content_post' => 'sometimes',
@@ -114,7 +115,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-
+        $this->authorize('delete', $post);
         $post->load('media'); 
         foreach ($post->media as $media) {
             if ($media->media_file && Storage::exists('uploads/' . $media->media_file)) {

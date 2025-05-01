@@ -156,6 +156,10 @@ describe("Creatures POST", () => {
 
 describe("Posts PUT", () => {
   test("Update as user owner", async () => {
+    await login(user, {
+      email: "edit@truc.fr",
+      password: "test123",
+    });
     const data = {
       title_post: "test name",
       content_post: "content_test",
@@ -202,21 +206,21 @@ describe("Posts DELETE", () => {
     const res = await Axios.get("/posts");
     const post = res.data.data.find((p) => p.user_id == user.id);
 
-    const deleteRes = await Axios.delete(`/posts/${post.id}`);
+    const deleteRes = await Axios.delete("/posts/" + post.id);
 
     expect(deleteRes.status).toBe(200);
   });
 
-  test("Delete as NOT owner (should fail)", async () => {
+  test("Delete as NOT owner", async () => {
     await login(userNotOwner, {
       email: "user@truc.fr",
       password: "test123",
     });
 
     const res = await Axios.get("/posts");
-    const post = res.data.data.find((p) => p.user_id !== userNotOwner.id);
+    const post = res.data.data.find((p) => p.user_id !== user.id);
 
-    const deleteRes = await Axios.delete(`/posts/${post.id}`, {
+    const deleteRes = await Axios.delete("/posts/" + post.id, {
       validateStatus: () => true,
     });
 
@@ -230,7 +234,7 @@ describe("Posts DELETE", () => {
     });
 
     const res = await Axios.get("/posts");
-    const post = res.data.data.find((p) => p.user_id !== adminUser.id);
+    const post = res.data.data.find((p) => p.user_id !== user.id);
 
     const deleteRes = await Axios.delete(`/posts/${post.id}`);
 
