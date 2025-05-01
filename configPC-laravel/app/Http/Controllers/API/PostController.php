@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Storage;
-use PHPOpenSourceSaver\JWTAuth\Contracts\Providers\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -61,7 +61,7 @@ class PostController extends Controller
             'is_published' => 'required',
             'order_post' => 'nullable|integer|min:1|max:10',
         ]);
-        $user = auth()->user();
+        $user = Auth::user();
         if (!$user) {
             return response()->json(['error' => 'Utilisateur non authentifié'], 401);
         }
@@ -88,11 +88,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $user = auth()->user();
-        if ((int)$post->user_id !== (int)$user->id && $user->role !== 'ROLE_ADMIN') {
-            return response()->json(['error' => 'Action non autorisée'], 403);
-        }
-
+        
         $formFields = $request->validate([
             'title_post' => 'sometimes|string',
             'content_post' => 'sometimes',
@@ -118,12 +114,6 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $user = auth()->user();
-    
-        // Vérifier si l'utilisateur est authentifié, est le propriétaire du post OU est un administrateur
-        if (!$user || ($post->user_id !== $user->id || $user->role !== 'ROLE_ADMIN')) {
-            return response()->json(['error' => 'Action non autorisée'], 403);
-        }
 
         $post->load('media'); 
         foreach ($post->media as $media) {
