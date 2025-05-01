@@ -19,8 +19,8 @@ jobs:
     - name: Sleep for 10 seconds
       run: sleep 10s
       shell: bash
-    - name: Database migrate
-      run: docker exec laravel-docker bash -c "php artisan migrate"
+    - name: Migrate and seed
+      run: docker exec laravel-docker php artisan migrate:fresh --seed
     - name: Database seeding
       run: docker exec laravel-docker bash -c "php artisan db:seed"
     - name: Install node
@@ -33,5 +33,8 @@ jobs:
       run: npm install -g jest
     - name: Run tests
       run: npm run test 
+    - name: Show Laravel logs on failure
+      if: failure()
+      run: docker exec laravel-docker cat storage/logs/laravel.log || true
     # This workflow configuration file defines the CI (Continuous Integration) pipeline.
     # It is located in the .github/workflows directory and is triggered by changes in the repository.
