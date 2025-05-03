@@ -126,7 +126,7 @@ const EditPost = () => {
       formData.append("_method", "PUT");
 
       await axios.post(
-        `${process.env.REACT_APP_API_URL}i/posts/${post}`,
+        `${process.env.REACT_APP_API_URL}/posts/${post}`,
         formData,
         {
           headers: {

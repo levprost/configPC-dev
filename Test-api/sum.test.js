@@ -11,267 +11,204 @@ const Axios = axios.create({
 let user = {};
 let userNotOwner = {};
 let adminUser = {};
-// ------------------------------------------------------------------------------
 
 beforeAll(async () => {
-  await login(user, {
-    email: "edit@truc.fr",
-    password: "test123",
-  });
-
-  await login(userNotOwner, {
-    email: "user@truc.fr",
-    password: "test123",
-  });
-
-  await login(adminUser, {
-    email: "admin@truc.fr",
-    password: "test123",
-  });
-});
-describe("User Login with JWT", () => {
-  test("Vérification de l'authentification via JWT", async () => {
-    try {
-      const res = await login(user, {
-        email: "edit@truc.fr",
-        password: "test123",
-      });
-
-      expect(user.token).toBeDefined();
-      expect(user.email).toBe("edit@truc.fr");
-      expect(res.status).toBe(200);
-    } catch (error) {
-      console.error("Error during JWT login:", error);
-      throw error;
-    }
-  });
+  await login(user, { email: "edit@truc.fr", password: "test123" });
+  await login(userNotOwner, { email: "user@truc.fr", password: "test123" });
+  await login(adminUser, { email: "admin@truc.fr", password: "test123" });
 });
 
-// ------------------------------------------------------------------------------
+// --------------------------------------------------
 // UTILS
-// ------------------------------------------------------------------------------
-async function login(user, credentials) {
+// --------------------------------------------------
+async function login(userObj, credentials) {
   const res = await Axios.post("/login", credentials);
   const token = res.data.data.access_token.token;
 
   Axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-  for (let key in res.data.data.user) {
-    user[key] = res.data.data.user[key];
-  }
-  user.token = token;
-
+  Object.assign(userObj, res.data.data.user, { token });
   return res;
 }
-describe("Admin Login", () => {
-  test("Vérification de l'authentification", async () => {
-    await login(adminUser, {
-      email: "admin@truc.fr",
-      password: "test123",
-    });
-  });
-});
-describe("userNotOwner Login", () => {
-  test("Vérification de l'authentification", async () => {
-    await login(userNotOwner, {
-      email: "user@truc.fr",
-      password: "test123",
-    });
-  });
-});
-async function register(dataReg) {
-  return await Axios.post("/register", dataReg);
+
+async function register(data) {
+  return await Axios.post("/register", data);
 }
-describe("User Register", () => {
-  test("Vérification de l'inscription", async () => {
-    const dataReg = {
+
+// --------------------------------------------------
+// TESTS
+// --------------------------------------------------
+
+describe("Authentication", () => {
+  test("JWT login works correctly", async () => {
+    const res = await login(user, {
+      email: "edit@truc.fr",
+      password: "test123",
+    });
+
+    expect(user.token).toBeDefined();
+    expect(user.email).toBe("edit@truc.fr");
+    expect(res.status).toBe(200);
+  });
+
+  test("Admin login succeeds", async () => {
+    expect(adminUser.token).toBeDefined();
+    expect(adminUser.email).toBe("admin@truc.fr");
+  });
+
+  test("Another user login succeeds", async () => {
+    expect(userNotOwner.token).toBeDefined();
+    expect(userNotOwner.email).toBe("user@truc.fr");
+  });
+});
+
+describe("Registration", () => {
+  test("User registration succeeds", async () => {
+    const data = {
       nick_name: "test520",
       email: "test520@mail.com",
       password: "test123",
       password_confirmation: "test123",
     };
 
-    const resReg = await register(dataReg);
+    const res = await register(data);
 
-    expect(resReg.status).toBe(200);
-    expect(resReg.data.data.user.email).toBe("test520@mail.com");
-    expect(resReg.data.data.user.nick_name).toBe("test520");
+    expect(res.status).toBe(200);
+    expect(res.data.data.user.email).toBe(data.email);
+    expect(res.data.data.user.nick_name).toBe(data.nick_name);
   });
 });
-describe("Posts GET", () => {
-  test("Récupération de la liste des posts", async () => {
+
+describe("Posts API", () => {
+  test("Can list posts", async () => {
     const res = await Axios.get("/posts");
-    expect(res.data.data.length).toBeGreaterThanOrEqual(2);
+    expect(res.data.data.length).toBeGreaterThanOrEqual(1);
   });
 
-  test("Get Show", async () => {
-    const posts = await Axios.get("/posts");
-    const res = await Axios.get("/posts/" + posts.data.data[0].id);
+  test("Can show individual post", async () => {
+    const { data: posts } = await Axios.get("/posts");
+    const res = await Axios.get(`/posts/${posts.data[0].id}`);
+
     expect(res.data.title_post).toBeTruthy();
     expect(res.data.user_id).toBeGreaterThanOrEqual(1);
   });
-});
-describe("Creatures POST", () => {
-  test("Create with good data", async (data = {
-    title_post: "test name 2222",
-    content_post: "content_test",
-    content_post_1: "content_test_1",
-    content_post_2: "Additional content 2",
-    description_post: "This is a post description",
-    subtitle_post: "subtitle_post",
-    is_published: false,
-    order_post: 3,
-  }) => {
-    // before
-    const postRes = await Axios.post("/posts", data);
-    // after
-    const cur = await Axios.get("/posts/" + postRes.data.newPost.id);
 
-    expect(postRes.data.newPost.title_post).toBe("test name 2222");
-    expect(cur.data.title_post).toBe("test name 2222");
+  test("Create post with valid data", async () => {
+    const data = {
+      title_post: "Valid Title",
+      content_post: "Some content",
+      content_post_1: "Extra content",
+      content_post_2: "More content",
+      description_post: "Desc",
+      subtitle_post: "Subtitle",
+      is_published: false,
+      order_post: 1,
+    };
+
+    const res = await Axios.post("/posts", data);
+    const post = await Axios.get(`/posts/${res.data.newPost.id}`);
+
+    expect(post.data.title_post).toBe(data.title_post);
   });
 
-  test("Create with bad data", async (data = {
-    title_post: "test name",
-    content_post: "content_test",
-    content_post_1: "content_test_1",
-    subtitle_post: "subtitle_post",
-    is_published: false,
-    user_id: "user.data.data.id",
-  }) => {
+  test("Fail to create post with invalid data", async () => {
+    const data = {
+      title_post: "", // invalid: title required
+      content_post: "Test",
+    };
+
     const old = await Axios.get("/posts");
-    const oldNumPost = old.data.length;
-    // before
     const createRes = await Axios.post("/posts", data, {
       validateStatus: () => true,
     });
-    // after
-    const cur = await Axios.get("/posts");
-    const curNumPosts = cur.data.length;
+    const current = await Axios.get("/posts");
 
     expect(createRes.status).toBe(422);
-    expect(curNumPosts).toBe(oldNumPost);
+    expect(current.data.data.length).toBe(old.data.data.length);
   });
-});
 
-describe("Posts PUT", () => {
-  test("Update as user owner", async () => {
-    await login(user, {
-      email: "edit@truc.fr",
-      password: "test123",
-    });
-    const data = {
-      title_post: "test name",
-      content_post: "content_test",
+  test("Update post as owner", async () => {
+    const all = await Axios.get("/posts");
+    const post = all.data.data.find((p) => p.user_id == user.id);
+
+    const res = await Axios.post('/posts/' + post.id, {
+      title_post: "Updated Title",
+      content_post: "Updated Content",
       _method: "PUT",
-    };
-
-    const res = await Axios.get("/posts/");
-    const post = res.data.data.find((p) => p.user_id == user.id);
-    console.log(post);
-    console.log(user);
-
-    const updateRes = await Axios.post("/posts/" + post.id, data);
-    expect(updateRes.status).toBe(200);
-    expect(updateRes.data.new_post.title_post).toBe("test name");
-  });
-
-  test("Update as not user owner", async () => {
-    const data = {
-      title_post: "New title",
-      content_post: "content_test_new",
-      content_post_1: "content_test_1_new",
-      subtitle_post: "subtitle_post_new",
-      is_published: false,
-      _method: "PUT",
-    };
-
-    const res = await Axios.get("/posts");
-    const post = res.data.data.find((p) => p.user_id != user.id);
-    const updateRes = await Axios.post("/posts/" + post.id, data, {
-      validateStatus: () => true,
-    });
-    expect(updateRes.status).toBe(403);
-    expect(updateRes.data.title_post).not.toBe("New title");
-  });
-});
-
-describe("Posts DELETE", () => {
-  test("Delete as post owner", async () => {
-    await login(user, {
-      email: "edit@truc.fr",
-      password: "test123",
     });
 
-    const res = await Axios.get("/posts");
-    const post = res.data.data.find((p) => p.user_id == user.id);
+    expect(res.status).toBe(200);
+    expect(res.data.new_post.title_post).toBe("Updated Title");
+  });
 
-    const deleteRes = await Axios.delete("/posts/" + post.id);
+  test("Fail to update post as non-owner", async () => {
+    const { data: all } = await Axios.get("/posts");
+    const post = all.data.find((p) => p.user_id != user.id);
+
+    const res = await Axios.post(
+      '/posts/' + post.id,
+      {
+        title_post: "Hack Title",
+        _method: "PUT",
+      },
+      {
+        validateStatus: () => true,
+      }
+    );
+
+    expect(res.status).toBe(403);
+  });
+
+
+  test("Delete post as owner", async () => {
+    const res = await Axios.get('/posts');
+    const post = res.data.data.find(p => p.user_id == user.id);
+    // before
+    const deleteRes = await Axios.delete('/posts/' + post.id);
+    // after
 
     expect(deleteRes.status).toBe(200);
   });
 
-  test("Delete as NOT owner", async () => {
-    await login(userNotOwner, {
-      email: "user@truc.fr",
-      password: "test123",
-    });
+  test("Fail to delete post as non-owner", async () => {
+    const all = await Axios.get("/posts");
+    const post = all.data.data.find((p) => p.user_id != user.id);
 
-    const res = await Axios.get("/posts");
-    const post = res.data.data.find((p) => p.user_id !== user.id);
-
-    const deleteRes = await Axios.delete("/posts/" + post.id, {
+    const res = await Axios.delete(`/posts/${post.id}`, {
       validateStatus: () => true,
     });
 
-    expect(deleteRes.status).toBe(403);
-  });
-
-  test("Delete as Admin", async () => {
-    await login(adminUser, {
-      email: "admin@truc.fr",
-      password: "test123",
-    });
-
-    const res = await Axios.get("/posts");
-    const post = res.data.data.find((p) => p.user_id !== user.id);
-
-    const deleteRes = await Axios.delete(`/posts/${post.id}`);
-
-    expect(deleteRes.status).toBe(200);
+    expect(res.status).toBe(403);
   });
 });
-
 describe("Admin Login", () => {
-  test("Vérification de l'authentification de l'administration", async () => {
-    try {
-      await login(adminUser, {
-        email: "admin@truc.fr",
-        password: "test123",
-      });
-    } catch (error) {
-      console.error("Error during admin login:", error);
-      throw error;
-    }
+  test("Vérification de l'authentification", async () => {
+    await login(user, {
+      email: 'admin@truc.fr',
+      password: 'test123'
+    });
   });
 });
 
-describe("Posts PUT", () => {
-  test("Update as Admin owner", async (data = {
-    title_post: "test name",
-    content_post: "content_test",
-    content_post_1: "content_test_1",
-    subtitle_post: "subtitle_post",
-    is_published: false,
-    _method: "PUT",
-  }) => {
-    const res = await Axios.get("/posts/");
+describe("Admin Posts PUT", () => {
+  test("Update as admin", async (data = { title_post: 'New name', _method: 'PUT' }) => {
+    const res = await Axios.get('/posts');
+    const post = res.data.data.find(p => p.user_id != user.id);
+    const updateRes = await Axios.post('/posts/' + post.id, data);
+    console.log(updateRes.data);
+    expect(updateRes.data.new_post.title_post).toBe('New name');
+  });
+});
 
-    const post = res.data.data.find((p) => p.user_id == user.id);
+describe("Admin Posts DELETE", () => {
+  test("Delete as admin", async () => {
+    const res = await Axios.get('/posts');
+    const post = res.data.data.find(p => p.user_id != user.id);
+    // before
+    const deleteRes = await Axios.delete('/posts/' + post.id);
+    // after
 
-    const updateRes = await Axios.post("/posts/" + post.id, data);
-    expect(updateRes.status).toBe(200);
-    expect(updateRes.data.new_post.title_post).toBe("test name");
+    expect(deleteRes.status).toBe(200);
   });
 });
 

@@ -113,7 +113,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function delete(Post $post)
     {
         $this->authorize('delete', $post);
         $post->load('media'); 

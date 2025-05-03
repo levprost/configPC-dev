@@ -15,23 +15,46 @@ const Posts = () => {
   }, [currentPage]);
 
   const displayPosts = async () => {
-    await axios.get(`${process.env.REACT_APP_API_URL}/posts?page=${currentPage}`)
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/posts?page=${currentPage}`)
       .then((res) => {
-        console.log(res.data);  
-        setPosts(res.data.data); 
+        console.log(res.data);
+        setPosts(res.data.data);
         setCurrentPage(res.data.current_page);
         setTotalPages(res.data.last_page);
       });
   };
-  
 
-  const deletePost = (id) => {
-    axios.delete(`${process.env.REACT_APP_API_URL}/posts/${id}`).then(displayPosts);
-    displayPosts();
+  const deletePost = async (id) => {
+    const token = localStorage.getItem("access_token");
+
+    if (!token) {
+      console.error("Utilisateur non authentifié !");
+      return;
+    }
+
+    try {
+      const response = await axios.delete(
+      `${process.env.REACT_APP_API_URL}/posts/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,  // Токен для авторизации
+        },
+      }
+    );
+
+    console.log("Пост успешно удалён", response.data);
+    displayPosts();  // Обновляем список постов после удаления
+  } catch (error) {
+    console.error("Ошибка при удалении поста:", error.response || error.message);
+    alert("Не удалось удалить пост. Попробуйте позже.");
+  }
+     
   };
+
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page); 
+      setCurrentPage(page);
     }
   };
 
@@ -52,29 +75,33 @@ const Posts = () => {
             </tr>
           </thead>
           <tbody>
-            {posts && posts.map((post) => (
-              <tr key={post.id}>
-                <td>{post.title_post}</td>
-                <td>{post.subtitle_post}</td>
-                <td>{post.content_post_1}</td>
-                <td>{post.content_post_2}</td>
-                <td>{post.content_post_3}</td>
-                <td>{post.description_post}</td>
-                <td>{post.user_id}</td>
+            {posts &&
+              posts.map((post) => (
+                <tr key={post.id}>
+                  <td>{post.title_post}</td>
+                  <td>{post.subtitle_post}</td>
+                  <td>{post.content_post_1}</td>
+                  <td>{post.content_post_2}</td>
+                  <td>{post.content_post_3}</td>
+                  <td>{post.description_post}</td>
+                  <td>{post.user_id}</td>
 
-                <Link
-                  to={`/admin/posts/edit/${post.id}`}
-                  className="btn btn-success me-2"
-                >
-                  Edit
-                </Link>
-                <td>
-                  <Button variant="danger" onClick={() => deletePost(post.id)}>
-                    Supprimer
-                  </Button>
-                </td>
-              </tr>
-            ))}
+                  <Link
+                    to={`/admin/posts/edit/${post.id}`}
+                    className="btn btn-success me-2"
+                  >
+                    Edit
+                  </Link>
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={() => deletePost(post.id)}
+                    >
+                      Supprimer
+                    </Button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </Table>
         <div className="pagination">
