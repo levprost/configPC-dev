@@ -1,6 +1,42 @@
 .mainConfig{
     background-color: rgb(54, 54, 54);
 }
+.comp-main{
+    background-color: rgb(54, 54, 54);
+    border-radius: 4px;
+}
+.border-card{
+    border: 1px solid rgb(116, 116, 116) !important ;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(16, 16, 16);
+}
+.strictLine{
+    border: 1px solid rgb(196, 196, 196) !important ;
+    border-radius: 10px;
+    background-color: rgb(54, 54, 54);
+}
+.comp-main > h4{
+    color: rgb(255, 255, 255) !important;
+    font-family: "Cascadia Mono", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border-radius:4px;
+}
+.text-lab{
+    color: rgb(255, 255, 255) !important;
+    font-family: "Cascadia Mono", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.control-label{
+   background-color: rgb(239, 238, 238) !important;
+    font-family: "Cascadia Mono", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
 h2{
     color: rgb(255, 255, 255) !important;
     font-family: "Cascadia Mono", sans-serif;

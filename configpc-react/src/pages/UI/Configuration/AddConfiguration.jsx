@@ -128,11 +128,11 @@ const AddConfiguration = () => {
         <h2 className="text-center mb-4">Ajouter une configuration</h2>
 
         <div className="row">
-          <div className="col-md-6">
-            <div className="card">
-              <div className="card-body">
+          <div className="col-md-12 col-lg-6 mb-4">
+            <div className="card border-card">
+              <div className="card-body comp-main">
                 <h4>Informations sur la configuration</h4>
-                <hr />
+                <hr className="strictLine"/>
                 {Object.keys(validationError).length > 0 && (
                   <div className="alert alert-danger">
                     <ul>
@@ -144,32 +144,36 @@ const AddConfiguration = () => {
                 )}
                 <Form>
                   <Form.Group controlId="nameConfig">
-                    <Form.Label>Nom</Form.Label>
+                    <Form.Label className="text-lab">Nom</Form.Label>
                     <Form.Control
+                    className="control-label"
                       type="text"
                       value={nameConfig}
                       onChange={(e) => setNameConfig(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mt-3">
-                    <Form.Label>Titre</Form.Label>
+                    <Form.Label className="text-lab">Titre</Form.Label>
                     <Form.Control
+                    className="control-label"
                       type="text"
                       value={titleConfig}
                       onChange={(e) => setTitleConfig(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mt-3">
-                    <Form.Label>Sous-titre</Form.Label>
+                    <Form.Label className="text-lab">Sous-titre</Form.Label>
                     <Form.Control
+                    className="control-label"
                       type="text"
                       value={subtitleConfig}
                       onChange={(e) => setSubtitleConfig(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mt-3">
-                    <Form.Label>Description</Form.Label>
+                    <Form.Label className="text-lab">Description</Form.Label>
                     <Form.Control
+                    className="control-label"
                       as="textarea"
                       rows={3}
                       value={descriptionConfig}
@@ -177,8 +181,9 @@ const AddConfiguration = () => {
                     />
                   </Form.Group>
                   <Form.Group className="mt-3">
-                    <Form.Label>Explication</Form.Label>
+                    <Form.Label className="text-lab">Explication</Form.Label>
                     <Form.Control
+                    className="control-label"
                       as="textarea"
                       rows={3}
                       value={explicationConfig}
@@ -186,11 +191,11 @@ const AddConfiguration = () => {
                     />
                   </Form.Group>
                   <Form.Group className="mt-3">
-                    <Form.Label>Image</Form.Label>
+                    <Form.Label className="text-lab">Image</Form.Label>
                     <Form.Control type="file" onChange={handleImageChange} />
                   </Form.Group>
                   <Form.Group className="mt-3">
-                    <Form.Label>Benchmark</Form.Label>
+                    <Form.Label className="text-lab">Benchmark</Form.Label>
                     <Form.Control
                       type="file"
                       onChange={handleBenchmarkChange}
@@ -201,10 +206,11 @@ const AddConfiguration = () => {
             </div>
           </div>
 
-          <div className="col-md-6 mt-4 mt-md-0">
-            <div className="card">
-              <div className="card-body">
+          <div className="col-md-12 col-lg-6 mt-4 mt-md-0">
+            <div className="card border-card">
+              <div className="card-body comp-main">
                 <h4>Sélectionner les composants</h4>
+                <hr className="strictLine"/>
                 <Form.Control
                   type="text"
                   placeholder="Recherche..."
@@ -228,7 +234,7 @@ const AddConfiguration = () => {
 
             {selectedComponents.length > 0 && (
               <div className="row mt-4">
-                <h5 className="text-center mb-3">Компоненты конфигурации</h5>
+                <h5 className="text-center mb-3">Les composant du PC</h5>
                 {selectedComponents.map((comp) => (
                   <div className="col-md-6 col-lg-4 mb-3" key={comp.id}>
                     <div className="card h-100 shadow-sm">
@@ -240,10 +246,13 @@ const AddConfiguration = () => {
                           style={{ objectFit: "cover", height: "180px" }}
                         />
                       )}
-                      <div className="card-body">
-                        <h5 className="card-title">{comp.name_component}</h5>
-                        <p className="card-text">
+                      <div className="card-body-comp">
+                        <h5 className="card-title-comp">{comp.name_component}</h5>
+                        <p className="card-text-comp">
                           <strong>Prix:</strong> {comp.price_component} €
+                        </p>
+                        <p className="card-text-comp">
+                          <strong>Consommation:</strong> {comp.consumption_component} Watt
                         </p>
                       </div>
                     </div>

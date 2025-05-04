@@ -1,6 +1,6 @@
 # charge une image de base; Ici un linux avec apache et PHP 8.3 
 FROM php:8.3-apache 
- 
+ARG MODE=test 
 # Installation des dépendances PHP
 RUN apt-get update && apt-get install -y \ 
     libfreetype-dev \ 
@@ -25,9 +25,9 @@ COPY vhost.conf /etc/apache2/sites-available/000-default.conf
  
 RUN a2enmod rewrite headers env dir mime authz_host authz_core
  
-RUN chown -R www-data:www-data /var/www/app \ 
-    && chmod -R 775 /var/www/app/storage 
- 
+RUN chown -R www-data:www-data /var/www/app \
+    && chmod -R 775 /var/www/app/storage
+
 RUN chown -R www-data:www-data /var/www/app/storage
 # Installation de composer
 # Configurer la variable d'environnement 
