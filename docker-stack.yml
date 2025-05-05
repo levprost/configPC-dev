@@ -1,18 +1,51 @@
 services:
   laravel-docker:
-    image: ghcr.io/levprost/ConfigPC-dev:latest
+    image: ghcr.io/levprost/configPC-dev:latest
     ports:
       - 8000:80
+    depends_on:
+      - mysql_db
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.laravel-docker.rule=Host(`api.configpc.site`)"
+      - "traefik.http.routers.laravel-docker.entrypoints=websecure"
+      - "traefik.http.routers.laravel-docker.tls.certresolver=myresolver"
 
-  vue-docker:
-    image: ghcr.io/levprost/ConfigPC-dev:latest
+  react-docker:
+    image: ghcr.io/levprost/configPC-laravel:latest
     ports:
-      - 80:80
+      - 8001:80
+    depends_on:
+      - laravel-docker
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.react.rule=Host(`configpc.site`)"
+      - "traefik.http.routers.react.entrypoints=websecure"
+      - "traefik.http.routers.react.tls.certresolver=myresolver"
 
   mysql_db:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: 52SPB52
       MYSQL_DATABASE: laravel
     ports:
       - 3306:3306
+
+  traefik:
+    image: traefik:v3.2
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=configpc@configpc.site.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "/letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"

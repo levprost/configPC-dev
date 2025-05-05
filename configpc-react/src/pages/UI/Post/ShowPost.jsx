@@ -12,8 +12,8 @@ import { FaUser, FaCalendarAlt, FaCommentDots } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-
-import { CgPacman } from "react-icons/cg";
+import "./../../../styles/css/showpost.css"
+import Menu from "../../../components/Menu";
 
 const ShowPost = () => {
   const { post } = useParams();
@@ -111,124 +111,127 @@ const ShowPost = () => {
   };
 
   return (
-    <Container className="mt-5">
-      <Row className="justify-content-center">
-        <Col lg={8}>
-          <Card className="shadow-lg p-4">
-            <Card.Body>
-              <h2 className="text-center">{postData.title_post}</h2>
-              <h5 className="text-center text-muted">
-                {postData.subtitle_post}
-              </h5>
-              <hr />
-              <div className="d-flex justify-content-between text-muted">
-                <span>
-                  <FaUser /> Auteur:{" "}
-                  {postData.user ? postData.user.nick_name : "Inconnu"}
-                </span>
-                <span>
-                  <FaCalendarAlt /> Publié le:{" "}
-                  {new Date(postData.created_at).toLocaleDateString("fr-FR")}
-                </span>
-              </div>
-            </Card.Body>
+      <div className="mainPost">
+      <Menu />
+        <Container className="mt-5">
+          <Row className="justify-content-center post-card">
+            <Col lg={8}>
+              <Card className="p-4 post-card-border">
+                <Card.Body>
+                  <h2 className="text-center title-post">{postData.title_post}</h2>
+                  <h5 className="text-center subtitle-post">
+                    {postData.subtitle_post}
+                  </h5>
+                  <hr className="strictLine"/>
+                  <div className="d-flex justify-content-between text-muted">
+                    <span className="text-white">
+                      <FaUser/> Auteur:{" "}
+                      {postData.user ? postData.user.nick_name : "Inconnu"}
+                    </span>
+                    <span className="text-white">
+                      <FaCalendarAlt/> Publié le:{" "}
+                      {new Date(postData.created_at).toLocaleDateString("fr-FR")}
+                    </span>
+                  </div>
+                </Card.Body>
 
-            <Card.Body>
-              <p>{postData.content_post}</p>
-              {postData.content_post_1 && <p>{postData.content_post_1}</p>}
-              {postData.content_post_2 && <p>{postData.content_post_2}</p>}
-              <blockquote className="blockquote text-muted">
-                {postData.description_post}
-              </blockquote>
-            </Card.Body>
+                <Card.Body className="border rounded bg-white border-general">
+                  <p>{postData.content_post}</p>
+                  {postData.content_post_1 && <p>{postData.content_post_1}</p>}
+                  {postData.content_post_2 && <p>{postData.content_post_2}</p>}
+                  <blockquote >
+                    {postData.description_post}
+                  </blockquote>
+                </Card.Body>
 
-            <Card.Body>
-              <h4 className="mb-3">Médias</h4>
-              {postData.media && postData.media.length > 0 ? (
-                <Row>
-                  {postData.media.map((media, index) => (
-                    <Col key={index} md={4} className="mb-3">
-                      <Image
-                        src={`http://127.0.0.1:8000/storage/uploads/${media.media_file}`}
-                        alt="Média"
-                        thumbnail
-                        className="shadow-sm rounded"
-                      />
-                    </Col>
-                  ))}
-                </Row>
-              ) : (
-                <p className="text-muted">Aucun média disponible.</p>
-              )}
-            </Card.Body>
+                <Card.Body>
+                  <h4 className="mb-3 text-white">Médias</h4>
+                  {postData.media && postData.media.length > 0 ? (
+                    <Row>
+                      {postData.media.map((media, index) => (
+                        <Col key={index} md={4} className="mb-3">
+                          <Image
+                            src={`http://127.0.0.1:8000/storage/uploads/${media.media_file}`}
+                            alt="Média"
+                            thumbnail
+                            className="shadow-sm rounded"
+                          />
+                        </Col>
+                      ))}
+                    </Row>
+                  ) : (
+                    <p className="text-muted">Aucun média disponible.</p>
+                  )}
+                </Card.Body>
 
-            <Card.Body>
-              <h4 className="mb-3">
-                <FaCommentDots /> Commentaires
-              </h4>
-              {comments.length > 0 ? (
-                <ListGroup variant="flush">
-                  {comments.map((comment, index) => (
-                    <ListGroup.Item
-                      key={index}
-                      className="border-0 d-flex justify-content-between align-items-center"
-                    >
-                      <div>
-                        <strong>{comment.user.nick_name}</strong>
-                        <p className="mb-1">{comment.content_comment}</p>
-                        <small className="text-muted">
-                          Posté le{" "}
-                          {new Date(comment.created_at).toLocaleDateString(
-                            "fr-FR"
-                          )}
-                        </small>
-                      </div>
-
-                      {/* Кнопка удаления (показывается только автору комментария) */}
-                      {comment.user.id === userComment && (
-                        <Button
-                          variant="danger"
-                          size="sm"
-                          onClick={() => deleteComment(comment.id)}
+                <Card.Body>
+                  <h4 className="mb-3 text-white">
+                    <FaCommentDots /> Commentaires
+                  </h4>
+                  {comments.length > 0 ? (
+                    <ListGroup variant="flush rounded border-general">
+                      {comments.map((comment, index) => (
+                        <ListGroup.Item
+                          key={index}
+                          className="border-0 d-flex justify-content-between align-items-center"
                         >
-                          🗑️
-                        </Button>
-                      )}
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              ) : (
-                <p className="text-muted">Aucun commentaire pour le moment.</p>
-              )}
-            </Card.Body>
+                          <div>
+                            <strong className="nickname">{comment.user.nick_name}</strong>
+                            <p className="mb-1">{comment.content_comment}</p>
+                            <small className="text-muted">
+                              Posté le{" "}
+                              {new Date(comment.created_at).toLocaleDateString(
+                                "fr-FR"
+                              )}
+                            </small>
+                          </div>
 
-            <Card.Body>
-              <h4 className="mb-3">Ajouter un commentaire</h4>
-              <Form onSubmit={addComment}>
-                <Form.Group controlId="comment">
-                  <Form.Label>Votre commentaire:</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    value={contentComment}
-                    onChange={(e) => setContentComment(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-                {validationError && (
-                  <p className="text-danger mt-2">
-                    {validationError.content_comment}
-                  </p>
-                )}
-                <Button variant="primary" type="submit" className="mt-3">
-                  Publier
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+                          {/* Кнопка удаления (показывается только автору комментария) */}
+                          {comment.user.id === userComment && (
+                            <Button
+                              variant="danger"
+                              size="sm"
+                              onClick={() => deleteComment(comment.id)}
+                            >
+                              🗑️
+                            </Button>
+                          )}
+                        </ListGroup.Item>
+                      ))}
+                    </ListGroup>
+                  ) : (
+                    <p className="text-muted">Aucun commentaire pour le moment.</p>
+                  )}
+                </Card.Body>
+
+                <Card.Body>
+                  <h4 className="mb-3">Ajouter un commentaire</h4>
+                  <Form onSubmit={addComment}>
+                    <Form.Group controlId="comment">
+                      <Form.Label>Votre commentaire:</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        value={contentComment}
+                        onChange={(e) => setContentComment(e.target.value)}
+                        required
+                      />
+                    </Form.Group>
+                    {validationError && (
+                      <p className="text-danger mt-2">
+                        {validationError.content_comment}
+                      </p>
+                    )}
+                    <Button variant="primary" type="submit" className="mt-3">
+                      Publier
+                    </Button>
+                  </Form>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </div>
   );
 };
 

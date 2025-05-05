@@ -71,7 +71,7 @@ jobs:
           with:
             registry: https://ghcr.io
             username: levprost
-            password: Gonka8245@
+            password: ${{ secrets.GITHUB_TOKEN }}
         - name: Build and push Docker image
           uses: docker/build-push-action@v6
           with:
@@ -95,7 +95,7 @@ jobs:
         with:
           registry: https://ghcr.io
           username: levprost
-          password: Gonka8245@
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
