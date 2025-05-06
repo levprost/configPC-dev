@@ -1,6 +1,6 @@
 services:
   laravel-docker:
-    image: ghcr.io/levprost/configPC-dev:latest
+    image: ghcr.io/levprost/configpc-laravel-prod:latest
     ports:
       - 8000:80
     depends_on:
@@ -13,7 +13,7 @@ services:
       - "traefik.http.routers.laravel-docker.tls.certresolver=myresolver"
 
   react-docker:
-    image: ghcr.io/levprost/configPC-laravel:latest
+    image: ghcr.io/levprost/configpc-react-prod:latest
     ports:
       - 8001:80
     depends_on:
@@ -21,9 +21,9 @@ services:
       - traefik
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.react.rule=Host(`configpc.site`)"
-      - "traefik.http.routers.react.entrypoints=websecure"
-      - "traefik.http.routers.react.tls.certresolver=myresolver"
+      - "traefik.http.routers.react-docker.rule=Host(`configpc.site`)"
+      - "traefik.http.routers.react-docker.entrypoints=websecure"
+      - "traefik.http.routers.react-docker.tls.certresolver=myresolver"
 
   mysql_db:
     image: mysql:latest
