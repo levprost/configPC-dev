@@ -32,7 +32,7 @@ services:
       MYSQL_ROOT_PASSWORD: 52SPB52
       MYSQL_DATABASE: configpc
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
       - /root/storage:/var/www/app/storage
 
