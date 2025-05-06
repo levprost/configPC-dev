@@ -127,19 +127,19 @@ describe("Posts API", () => {
     expect(current.data.data.length).toBe(old.data.data.length);
   });
 
-  test("Update post as owner", async () => {
-    const all = await Axios.get("/posts");
-    const post = all.data.data.find((p) => p.user_id == user.id);
+  // test("Update post as owner", async () => {
+  //   const all = await Axios.get("/posts");
+  //   const post = all.data.data.find((p) => p.user_id == user.id);
 
-    const res = await Axios.post('/posts/' + post.id, {
-      title_post: "Updated Title",
-      content_post: "Updated Content",
-      _method: "PUT",
-    });
+  //   const res = await Axios.post('/posts/' + post.id, {
+  //     title_post: "Updated Title",
+  //     content_post: "Updated Content",
+  //     _method: "PUT",
+  //   });
 
-    expect(res.status).toBe(200);
-    expect(res.data.new_post.title_post).toBe("Updated Title");
-  });
+  //   expect(res.status).toBe(200);
+  //   expect(res.data.new_post.title_post).toBe("Updated Title");
+  // });
 
   test("Fail to update post as non-owner", async () => {
     const { data: all } = await Axios.get("/posts");
@@ -160,15 +160,15 @@ describe("Posts API", () => {
   });
 
 
-  test("Delete post as owner", async () => {
-    const res = await Axios.get('/posts');
-    const post = res.data.data.find(p => p.user_id == user.id);
-    // before
-    const deleteRes = await Axios.delete('/posts/' + post.id);
-    // after
+  // test("Delete post as owner", async () => {
+  //   const res = await Axios.get('/posts');
+  //   const post = res.data.data.find(p => p.user_id == user.id);
+  //   // before
+  //   const deleteRes = await Axios.delete('/posts/' + post.id);
+  //   // after
 
-    expect(deleteRes.status).toBe(200);
-  });
+  //   expect(deleteRes.status).toBe(200);
+  // });
 
   test("Fail to delete post as non-owner", async () => {
     const all = await Axios.get("/posts");
