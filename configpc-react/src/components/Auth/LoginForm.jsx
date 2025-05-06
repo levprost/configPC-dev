@@ -30,7 +30,7 @@ function LoginForm() {
       formData.append("email", email);
       formData.append("password", password);
 
-      let res = await axios.post("http://127.0.0.1:8000/api/login", formData, {
+      let res = await axios.post(`${process.env.REACT_APP_API_URL}/login`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

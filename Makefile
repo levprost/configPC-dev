@@ -20,4 +20,4 @@ publish:
 	docker login https://ghcr.io
 	docker compose -f ./docker-stack.yml up -d
 publish-data:
-    docker exec $(docker ps --filter "name=configPC-laravel" -q) sh -c "php artisan migrate:fresh --seed"
+    docker exec $(docker ps --filter "name=configpc-laravel-docker-1" -q) sh -c "php artisan migrate:fresh --seed"
