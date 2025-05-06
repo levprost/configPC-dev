@@ -75,13 +75,13 @@ jobs:
         - name: Build and push Docker image
           uses: docker/build-push-action@v6
           with:
-            context: ./ConfigPC-dev
+            context: ./configPC-laravel
             build-args: |
               "MODE=prod"
             push: true
             tags: |
-              ghcr.io/levprost/ConfigPC-dev-prod:latest
-              ghcr.io/levprost/ConfigPC-dev-prod:${{ github.sha }}
+              ghcr.io/levprost/ConfigPC-laravel-prod:latest
+              ghcr.io/levprost/ConfigPC-laravel-prod:${{ github.sha }}
   build-and-push-image-spa-prod:
     needs:
       - tests
@@ -99,10 +99,10 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: ./ConfigPC-dev
+          context: ./configpc-react
           build-args: |
             "MODE=prod"
           push: true
           tags: |
-            ghcr.io/levprost/ConfigPC-dev-prod:latest
-            ghcr.io/levprost/ConfigPC-dev-prod:${{ github.sha }}
+            ghcr.io/levprost/configPC-react-prod:latest
+            ghcr.io/levprost/configPC-react-prod:${{ github.sha }}
