@@ -20,7 +20,7 @@ COPY . /var/www/app
 WORKDIR /var/www/app 
 
 # Copie de l'environnement
-COPY .env.test /var/www/app/.env
+COPY .env.${MODE} .env
 COPY vhost.conf /etc/apache2/sites-available/000-default.conf 
  
 RUN a2enmod rewrite headers env dir mime authz_host authz_core
