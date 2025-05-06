@@ -11,7 +11,8 @@ services:
       - "traefik.http.routers.laravel-docker.rule=Host(`api.configpc.site`)"
       - "traefik.http.routers.laravel-docker.entrypoints=websecure"
       - "traefik.http.routers.laravel-docker.tls.certresolver=myresolver"
-
+    volumes:
+      - /root/storage:/var/www/app/storage/app/public
   react-docker:
     image: ghcr.io/levprost/configpc-react-prod:latest
     ports:
@@ -29,9 +30,11 @@ services:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: 52SPB52
-      MYSQL_DATABASE: laravel
+      MYSQL_DATABASE: configpc
     ports:
       - 3306:3306
+    volumes:
+      - /root/storage:/var/www/app/storage
 
   traefik:
     image: traefik:v3.2
@@ -49,3 +52,4 @@ services:
     volumes:
       - "/letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - /root/storage:/var/www/app/storage
