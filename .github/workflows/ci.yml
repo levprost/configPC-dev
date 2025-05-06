@@ -80,8 +80,8 @@ jobs:
               "MODE=prod"
             push: true
             tags: |
-              ghcr.io/levprost/ConfigPC-laravel-prod:latest
-              ghcr.io/levprost/ConfigPC-laravel-prod:${{ github.sha }}
+              ghcr.io/levprost/configpc-laravel-prod:latest
+              ghcr.io/levprost/configpc-laravel-prod:${{ github.sha }}
   build-and-push-image-spa-prod:
     needs:
       - tests
@@ -104,5 +104,5 @@ jobs:
             "MODE=prod"
           push: true
           tags: |
-            ghcr.io/levprost/configPC-react-prod:latest
-            ghcr.io/levprost/configPC-react-prod:${{ github.sha }}
+            ghcr.io/levprost/configpc-react-prod:latest
+            ghcr.io/levprost/configpc-react-prod:${{ github.sha }}
