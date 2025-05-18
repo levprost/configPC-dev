@@ -20,14 +20,14 @@ jobs:
       - name: Install Docker
         uses: hoverkraft-tech/compose-action@v2.2.0
 
-      - name: Wait for MySQL to be ready
+      - name: Wait for MySQL to be ready via Laravel
         run: |
           for i in {1..10}; do
-            if docker exec laravel-docker mysqladmin ping -hmysql_db -uroot -p52SPB52 --silent; then
-              echo "✅ MySQL is ready!"
+            if docker exec laravel-docker php artisan db:show >/dev/null 2>&1; then
+              echo "✅ Laravel может подключиться к базе"
               break
             else
-              echo "⏳ Waiting for MySQL..."
+              echo "⏳ Ожидание готовности MySQL..."
               sleep 3
             fi
           done
