@@ -20,24 +20,13 @@ jobs:
       - name: Install Docker
         uses: hoverkraft-tech/compose-action@v2.2.0
 
-      - name: Wait for MySQL to be ready via Laravel
-        run: |
-          for i in {1..10}; do
-            if docker exec laravel-docker php artisan db:show >/dev/null 2>&1; then
-              echo "✅ Laravel может подключиться к базе"
-              break
-            else
-              echo "⏳ Ожидание готовности MySQL..."
-              sleep 3
-            fi
-          done
-
+      - name: Sleep for 10 seconds
+        run: sleep 10s
+        shell: bash
       - name: Fix storage permissions
         run: docker exec laravel-docker chmod -R 777 storage bootstrap/cache
-
       - name: Migrate and seed
         run: docker exec laravel-docker php artisan migrate:fresh --seed
-
 
       - name: Wait for Laravel to be ready
         run: |

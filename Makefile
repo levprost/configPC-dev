@@ -21,4 +21,4 @@ publish:
 	docker compose -f ./docker-stack.yml up -d
 publish-data:
     docker exec $(docker ps --filter "name=configpc-laravel-docker-1" -q) sh -c "php artisan migrate:fresh --seed"
-		sh -c "sleep 10 && php artisan migrate:fresh --seed"
+	
