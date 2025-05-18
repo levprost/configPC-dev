@@ -26,6 +26,7 @@ class ConfigurationFactory extends Factory
             'image_config' => $this->faker->imageUrl(),
             'benchmark_config' => $this->faker->imageUrl(),
             'user_id' => $this->faker->numberBetween(1, User::count()),
+            'is_published_config' => $this->faker->boolean()
         ];
     }
 }

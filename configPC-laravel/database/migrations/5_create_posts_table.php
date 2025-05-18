@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('content_post_2');
             $table->string('subtitle_post');
             $table->text('description_post');
-            $table->boolean('is_published')->default(false);
+            $table->boolean('is_published_post')->default(false);
             $table->integer('order_post')->nullable();
             $table->foreignId('user_id')->constrained();	
             $table->timestamps();

@@ -47,7 +47,7 @@ const Home = () => {
             <div className="carousel-inner">
               <div className="carousel-item active">
                 <div className="row">
-                  <div className="col-md-6 rightSide">
+                  <div className="col-lg-7 col-md-10 rightSide">
                     <h2 className="titleSlide">
                       Combien d'énergie mon ordinateur consomme-t-il?
                     </h2>
@@ -59,7 +59,7 @@ const Home = () => {
                   </div>
                   <img
                     src={imageCarousel}
-                    className="d-block carImg col-md-6"
+                    className="d-block carImg col-lg-5 col-md-2"
                     alt="configuration"
                   />
                   <h2 className="titleSlideImg">
@@ -134,7 +134,7 @@ const Home = () => {
                     <div className="col-md-4 containerImgPost g-0">
                       {post.media && post.media.length > 0 ? (
                         <img
-                          src={`http://127.0.0.1:8000/storage/uploads/${post.media[0].media_file}`}
+                          src={`${process.env.REACT_APP_FILE_URL}/${post.media[0].media_file}`}
                           className="rounded-start"
                           style={{
                             objectFit: "cover",

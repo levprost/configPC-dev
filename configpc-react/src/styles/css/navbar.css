@@ -18,3 +18,26 @@
 .navbar-nav {
   margin-left: auto;
 }
+.nav-item{
+  font-family: "Cascadia Mono", sans-serif !important;
+}
+.btnStyle{
+  background: rgb(54, 54, 54) !important;
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(116, 116, 116) !important;
+  box-shadow: 0px 0px 5px rgb(0, 0, 0) !important;
+  transition: all 0.3s ease-in-out;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px !important;
+  box-shadow: 0 0 10px white !important;
+  font-weight: 800 !important;
+}
+.btnStyle:hover
+{
+  background: rgb(255, 255, 255) !important;
+  color: rgb(54, 54, 54) !important;
+  border: 1px solid rgb(54, 54, 54) !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 0 10px white !important;
+}

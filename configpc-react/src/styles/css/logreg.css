@@ -1,0 +1,28 @@
+.background{
+    background-color: rgb(54, 54, 54);
+    height: 100vh;
+}
+.mainlogreg{
+    margin-top: 50px!important;
+    color: white;
+    font-family: "Cascadia Mono", sans-serif;
+    font-size: xx-large;
+}
+.btnLogReg{
+    background-color: rgb(54, 54, 54) !important;
+    color: white;
+    border: 1px solid white !important;
+    font-size: x-large !important;
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
+    font-family: "Cascadia Mono", sans-serif;
+    font-weight: 600 !important;
+    transition: background-color 0.3s, color 0.3s !important;
+    box-shadow: 0 0 5px white !important;
+}
+.btnLogReg:hover{
+    background-color: white !important;
+    color: rgb(54, 54, 54) !important;
+    box-shadow: 0 0 10px white !important;
+    transform: scale(1.05) !important;
+}

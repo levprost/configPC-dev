@@ -118,7 +118,7 @@ const ShowPost = () => {
             <Col lg={8}>
               <Card className="p-4 post-card-border">
                 <Card.Body>
-                  <h2 className="text-center title-post">{postData.title_post}</h2>
+                  <h1 className="text-center title-post">{postData.title_post}</h1>
                   <h5 className="text-center subtitle-post">
                     {postData.subtitle_post}
                   </h5>
@@ -152,9 +152,9 @@ const ShowPost = () => {
                         <Col key={index} md={4} className="mb-3">
                           <Image
                             src={`http://127.0.0.1:8000/storage/uploads/${media.media_file}`}
-                            alt="Média"
                             thumbnail
                             className="shadow-sm rounded"
+                            alt={`Image de ${media.media_file}`}
                           />
                         </Col>
                       ))}

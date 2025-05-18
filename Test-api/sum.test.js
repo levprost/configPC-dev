@@ -85,7 +85,7 @@ describe("Posts API", () => {
     expect(res.data.data.length).toBeGreaterThanOrEqual(1);
   });
 
-  test("Can show individual post", async () => {
+  test("Get show", async () => {
     const { data: posts } = await Axios.get("/posts");
     const res = await Axios.get(`/posts/${posts.data[0].id}`);
 

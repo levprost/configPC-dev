@@ -24,20 +24,28 @@ const AddBrand = () => {
 
   //Fonction d'ajout de Brand
   const addBrand = async (e) => {
-    e.preventDefault();
+    e.preventDefault();// Empêche le rechargement de la page lors 
+    // de la soumission du formulaire
+
 
     const formData = new FormData();
-
+     // Ajout des champs du formulaire dans l'objet FormData
     formData.append("name_brand", nameBrand);
     formData.append("logo_brand", logoBrand);
     formData.append("description_brand", descriptionBrand);
     formData.append("color_brand", colorBrand);
+     // Envoi de la requête POST vers l'API avec Axios
     await axios
       .post(`${process.env.REACT_APP_API_URL}/brands`, formData)
-      .then(navigate("/admin/brands"))
+      .then(navigate("/admin/brands"))// Redirection vers la page des marques après succès
+      // Gestion des erreurs de validation ou erreurs générales
       .catch(({ response }) => {
         if (response.status === 422) {
           setValidationError(response.data.errors);
+        }else{
+          setValidationError({
+            error: "Une erreur s'est produite lors de l'ajout de la marque.",
+          });
         }
       });
   };

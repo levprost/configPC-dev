@@ -19,10 +19,10 @@ return new class extends Migration
             $table->text('description_component');
             $table->integer('consumption_component');
             $table->text('review_component');
-            $table->string('image_component')->nullable();
+            $table->string('image_component', 100)->nullable();
             $table->string('video_component')->nullable();
             $table->date('release_date_component');
-            $table->string('type_component')->nullable();
+            $table->string('type_component', 100)->nullable();
             $table->foreignId('category_id')->constrained();
             $table->foreignId('brand_id')->constrained();
             $table->timestamps();

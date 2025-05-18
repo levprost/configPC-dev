@@ -20,7 +20,7 @@ const LogoutButton = () => {
   }
 
   return (
-    <Button variant="danger" className='glowing-btn' onClick={handleLogout}>
+    <Button variant="danger" onClick={handleLogout}>
       Déconnexion
     </Button>
   );

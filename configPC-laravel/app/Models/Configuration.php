@@ -16,7 +16,8 @@ class Configuration extends Model
         'explication_config',
         'image_config',
         'benchmark_config',
-        'user_id'
+        'user_id',
+        'is_published_config',
     ];
 
     public function users()

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 import axios from "axios";
+import Button from "react-bootstrap/Button";
 import LogoutButton from "./Auth/LogoutButton";
 import ButtonNav from "./constructs/ButtonNav";
 import "./../styles/css/navbar.css";
-import "./../styles/css/button.css";
 import "./../styles/css/buttonNav.css";
+
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const Navbar = () => {
     }
   };
 
- 
+
 
   return (
     <div className="navigation">
@@ -63,50 +64,58 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
-                <a href="/addconfiguration">
-                <ButtonNav
-                  text="Configurations"
-                  variant="hsl(0, 0.00%, 100.00%)"
-                  glow={true}
-                  href="/addconfiguration"
-                />
-                </a>
+                <Button
+                  onClick={() => navigate("/news")}
+                  className="btnStyle m-2"
+                >
+                  Actualités
+                </Button>
               </li>
               <li className="nav-item">
-                <ButtonNav
-                  text="Actualités"
-                  variant="hsl(60, 100%, 50%)"
-                  glow={false}
-                />
+                <Button
+                  onClick={() => navigate("/addconfiguration")}
+                  className="btnStyle m-2"
+                >
+                  Composants
+                </Button>
+              </li>
+              <li className="nav-item">
+                <Button
+                  onClick={() => navigate("/addconfiguration")}
+                  className="btnStyle m-2"
+                >
+                  Configurations
+                </Button>
               </li>
               {user ? (
                 <>
-                  <li className="nav-item">
+                  <li className="nav-item m-2">
                     <span className="nav-link customLink">
                       {user.nick_name}
                     </span>
                   </li>
-                  <li className="nav-item">
+                  <li className="nav-item m-2">
                     <LogoutButton></LogoutButton>
                   </li>
                 </>
               ) : (
                 <>
-                  <li className="nav-item">
+                  <li className="nav-item m-2">
                     <a href="/login">
-                    <ButtonNav
-                      text="Se connecter"
-                      variant="hsl(120, 100%, 50%)"
-                      glow={true}
-                    />
+                      <ButtonNav
+                        text="Se connecter"
+                        variant="hsl(120, 100%, 50%)"
+                        glow={true}
+                      />
                     </a>
                   </li>
                   <li className="nav-item">
-                    <ButtonNav
-                      text="S'inscrire"
-                      variant="hsl(0, 0.00%, 100.00%)"
-                      glow={false}
-                    />
+                    <Button
+                      onClick={() => navigate("/register")}
+                      className="btnStyle m-2"
+                    >
+                      S'inscrire
+                    </Button>
                   </li>
                 </>
               )}

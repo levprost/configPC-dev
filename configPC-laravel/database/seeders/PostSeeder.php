@@ -21,7 +21,7 @@ class PostSeeder extends Seeder
             'content_post_2' => 'test_content_2',
             'subtitle_post' => 'test_subtitle',
             'description_post' => 'test_description',
-            'is_published' => 1,
+            'is_published_post' => 1,
             'user_id' => 2,
         ]);
     }

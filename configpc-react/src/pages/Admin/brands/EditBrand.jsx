@@ -19,10 +19,9 @@ const EditBrand = () => {
   const [validationError, setValidationError] = useState({});
 
   useEffect(() => {
-    getBrand(); // Загружаем данные при открытии страницы
+    getBrand(); 
   }, []);
 
-  // 🔹 Получаем данные бренда из API
   const getBrand = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/brands/${brand}`);
@@ -40,14 +39,15 @@ const EditBrand = () => {
 
 
   const updateBrand = async (e) => {
-    e.preventDefault();
+    e.preventDefault();// Empêche le rechargement de la page
 
     const formData = new FormData();
-    formData.append("_method", "PATCH"); 
+    formData.append("_method", "PATCH");// Méthode HTTP simulée via POST 
+     // Ajout des données du formulaire
     formData.append("name_brand", nameBrand);
     formData.append("description_brand", descriptionBrand);
     formData.append("color_brand", colorBrand);
-
+    // Ajout du nouveau logo si sélectionné
     if (logoBrand) {
       formData.append("logo_brand", logoBrand);
     }
@@ -55,13 +55,14 @@ const EditBrand = () => {
     try {
       await axios.post(`${process.env.REACT_APP_API_URL}/api/brands/${brand}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
+         // Spécifie le bon type de contenu pour l'image
       });
 
       navigate("/admin/brands");  
     } catch ({ response }) {
       if (response?.status === 422) {
-        console.error("Ошибка валидации:", response.data);
-        setValidationError(response.data.errors);
+        console.error("Erreur de la valitadtion:", response.data);
+        setValidationError(response.data.errors);// Affiche les erreurs de validation
       }
     }
   };

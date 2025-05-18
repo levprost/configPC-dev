@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineEye, AiTwotoneEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./../../styles/css/homePage.css";
 
 function RegisterForm() {
   document.title = "Créer un compte";
@@ -14,12 +15,11 @@ function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  // ✅ Функция для переключения пароля
+
   const handleClickShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
 
-  // ✅ Функция для обработки отправки формы
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/register`, data)

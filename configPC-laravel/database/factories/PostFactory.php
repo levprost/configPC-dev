@@ -24,7 +24,7 @@ class PostFactory extends Factory
             'content_post_2' => $this->faker->text(),
             'subtitle_post' => $this->faker->name(),
             'description_post' => $this->faker->text(),
-            'is_published' => $this->faker->boolean(),
+            'is_published_post' => $this->faker->boolean(),
             'user_id' => User::all()->random()->id,
         ];
     }

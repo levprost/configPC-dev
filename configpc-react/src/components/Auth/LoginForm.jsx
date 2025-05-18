@@ -8,6 +8,7 @@ import axios from "axios";
 import { AiOutlineEye, AiTwotoneEyeInvisible } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./../../styles/css/logreg.css";
 
 function LoginForm() {
 
@@ -45,10 +46,10 @@ function LoginForm() {
   };
 
   return (
-    <div className="login-form row justify-content-center mt-5">
+    <div className="login-form row justify-content-center ">
       <ToastContainer /> 
-      <Form onSubmit={handleSubmit(login)} className="col-5">
-        <Form.Group controlId="email">
+      <Form onSubmit={handleSubmit(login)} className="col-lg-8 col-md-10 col-sm-12 mainlogreg">
+        <Form.Group controlId="email" className="mb-3">
           <Form.Label>Email</Form.Label>
           <Form.Control type="email" {...register("email", { required: true })} />
           {errors.email && <p className="text-danger">Email requis</p>}
@@ -68,7 +69,7 @@ function LoginForm() {
           {errors.password && <p className="text-danger">Mot de passe requis</p>}
         </Form.Group>
 
-        <Button variant="primary" type="submit" className="mt-3">
+        <Button type="submit" className="mt-4 col-12 btnLogReg">
           Connexion
         </Button>
       </Form>

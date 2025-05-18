@@ -29,7 +29,7 @@ class PostController extends Controller
     }
     public function indexPublished()
     {
-        $posts = Post::where('is_published', true)->get()->load('media', 'usre');
+        $posts = Post::where('is_published_post', true)->get()->load('media', 'user');
         return response()->json($posts);
     }
     public function indexOrder()
@@ -51,7 +51,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        
+    $this->authorize('create', Post::class);
     $formFields = $request->validate([
             'title_post' => 'required|string',
             'content_post' => 'required',
@@ -63,9 +63,6 @@ class PostController extends Controller
             'order_post' => 'nullable|integer|min:1|max:10',
         ]);
         $user = Auth::user();
-        if (!$user) {
-            return response()->json(['error' => 'Utilisateur non authentifié'], 401);
-        }
         $formFields['user_id'] = $user->id;
         $newPost = Post::create($formFields);
         return response()->json([
@@ -79,7 +76,6 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-
         $post->load(['media', 'user', 'comments.user']);
         return response()->json($post);
     }
@@ -100,13 +96,10 @@ class PostController extends Controller
             'is_published' => 'sometimes|boolean',
             'order_post' => 'sometimes|integer',
         ]);
-
-        $nickName = $post->user ? $post->user->nick_name : null;
         $post->update($formFields);
         return response()->json([
             'status' => 'Mise à jour effectuée avec succès',
             'new_post' => $post,
-            'nick_name' => $nickName,
         ]);
     }
 

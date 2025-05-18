@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('configurations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name_config');
+            $table->string('name_config', 100);
             $table->string('title_config');
             $table->string('subtitle_config');
             $table->text('description_config');
             $table->text('explication_config');
-            $table->string('image_config')->nullable();
-            $table->string('benchmark_config')->nullable();
+            $table->string('image_config', 100)->nullable();
+            $table->string('benchmark_config', 100)->nullable();
             $table->foreignId('user_id')->constrained();
+            $table->boolean('is_published_config')->default(false);
         });
     }
 

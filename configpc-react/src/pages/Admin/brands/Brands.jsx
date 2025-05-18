@@ -18,13 +18,13 @@ const Brand = () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/brands?page=${currentPage}`)
       .then((res) => {
-        setBrands(res.data.data);  // Данные брендов
-        setCurrentPage(res.data.current_page);  // Текущая страница
-        setTotalPages(res.data.last_page);  // Общее количество страниц
+        setBrands(res.data.data);  
+        setCurrentPage(res.data.current_page); 
+        setTotalPages(res.data.last_page);
       });
   };
 
-  // Удаление бренда
+
   const deleteBrand = (id) => {
     axios.delete(`${process.env.REACT_APP_API_URL}/brands/${id}`).then(() => {
       displayBrands();  
