@@ -16,7 +16,7 @@ services:
   mysql_db:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: 52SPB52
       MYSQL_DATABASE: configpc
     ports:
       - 3306:3306
