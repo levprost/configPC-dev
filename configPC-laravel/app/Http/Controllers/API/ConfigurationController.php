@@ -99,12 +99,16 @@ class ConfigurationController extends Controller
         ->join('users', 'users.id', '=', 'user_configurations.user_id') // Joindre la table users pour récupérer le pseudo (nick_name)
         ->where('user_configurations.configuration_id', $configuration->id) // Filtrer par l'ID de la configuration actuelle (corrected table name)
         ->get();
-           
+    $auteur = User::query()
+        ->select('users.*')
+        ->where('users.id', $configuration->user_id) // Filtrer par l'ID de l'utilisateur
+        ->first();
     return response()->json([
         'configuration' => $configuration->load('components'), // Informations de la configuration
         'noteConfiguration' => $noteConfiguration, // Score le plus élevé basé sur la moyenne des notes
         'score' => $score, // Liste des scores
         'ratings' => $ratings, // Liste des évaluations avec commentaires et pseudos
+        'auteur' => $auteur 
     ]);
 }
 

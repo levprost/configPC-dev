@@ -30,6 +30,9 @@ import PostsList from "./pages/UI/Post/Posts"
 import ShowConfiguration from "./pages/UI/Configuration/ShowConfiguration"
 import AddConfiguration from "./pages/UI/Configuration/AddConfiguration"
 import CalculateConfiguration from "./pages/UI/Configuration/CalculateConfiguration";
+import AllConfigurations from "./pages/UI/Configuration/AllConfigurations";
+
+import Confident from "./pages/UI/Confident";
 
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 
@@ -71,8 +74,10 @@ const App = () => {
         <Route path="/ShowPost/:post" element={<ShowPost />} />
         <Route path="/ShowConfiguration/:configuration" element={<ShowConfiguration />} />
         <Route path="/addconfiguration" element={<AddConfiguration />} />
+        <Route path="/configurations" element={< AllConfigurations/>} />
         <Route path="/calculconfiguration" element={<CalculateConfiguration />} />
         <Route path="/posts" element={<PostsList />}/>
+        <Route path="/confident" element={<Confident />} />
         </Routes>
     </BrowserRouter> 
   ); 

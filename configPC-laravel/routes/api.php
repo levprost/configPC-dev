@@ -41,7 +41,7 @@ Route::put('/posts/{post}', [PostController::class, 'update']);
 Route::delete('/posts/{post}', [PostController::class, 'delete']);
 
 //==============================COMPONENT==============================
-Route::middleware(['auth:sanctum'])->get('/components', [ComponentController::class, 'index']);
+Route::get('/components', [ComponentController::class, 'index']);
 Route::get('/components/category/{category_id}', [ComponentController::class, 'indexByCategory']);
 Route::get('/components/brand/{brand_id}', [ComponentController::class, 'indexByBrand']);
 Route::post('/components', [ComponentController::class, 'store']);

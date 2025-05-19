@@ -65,7 +65,7 @@ const Navbar = () => {
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
                 <Button
-                  onClick={() => navigate("/news")}
+                  onClick={() => navigate("/posts")}
                   className="btnStyle m-2"
                 >
                   Actualités
@@ -81,7 +81,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <Button
-                  onClick={() => navigate("/addconfiguration")}
+                  onClick={() => navigate("/configurations")}
                   className="btnStyle m-2"
                 >
                   Configurations

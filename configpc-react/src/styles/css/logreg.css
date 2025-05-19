@@ -3,7 +3,7 @@
     height: 100vh;
 }
 .mainlogreg{
-    margin-top: 50px!important;
+    margin-top: 50px !important;
     color: white;
     font-family: "Cascadia Mono", sans-serif;
     font-size: xx-large;
@@ -25,4 +25,14 @@
     color: rgb(54, 54, 54) !important;
     box-shadow: 0 0 10px white !important;
     transform: scale(1.05) !important;
+}
+.plustext{
+    font-size: 20px !important;
+    font-family: "Cascadia Mono", sans-serif;
+    font-weight: 600 !important;
+    color: white !important;
+}
+a{
+    text-decoration: none !important;
+    color: rgb(0, 255, 251) !important;
 }

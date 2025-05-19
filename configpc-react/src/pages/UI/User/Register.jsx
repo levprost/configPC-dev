@@ -1,14 +1,17 @@
 import Container from "react-bootstrap/Container";
 import RegisterForm from "../../../components/Auth/RegisterForm";
 import Menu from "../../../components/Menu";
+import "./../../../styles/css/logreg.css";
 
 function Register() {
   return (
     <div>
       <Menu />
-      <Container fluid className="loginContainer">
+      <div className="background">
+      <Container fluid className="container">
         <RegisterForm />
       </Container>
+      </div>
     </div>
   );
 }

@@ -160,7 +160,7 @@ const ShowPost = () => {
                       ))}
                     </Row>
                   ) : (
-                    <p className="text-muted">Aucun média disponible.</p>
+                    <p className="text-white">Aucun média disponible.</p>
                   )}
                 </Card.Body>
 
@@ -169,14 +169,14 @@ const ShowPost = () => {
                     <FaCommentDots /> Commentaires
                   </h4>
                   {comments.length > 0 ? (
-                    <ListGroup variant="flush rounded border-general">
+                    <ListGroup variant="flush rounded border-general  text-white">
                       {comments.map((comment, index) => (
                         <ListGroup.Item
                           key={index}
                           className="border-0 d-flex justify-content-between align-items-center"
                         >
                           <div>
-                            <strong className="nickname">{comment.user.nick_name}</strong>
+                            <strong className="nickname  text-white">{comment.user.nick_name}</strong>
                             <p className="mb-1">{comment.content_comment}</p>
                             <small className="text-muted">
                               Posté le{" "}
@@ -186,7 +186,6 @@ const ShowPost = () => {
                             </small>
                           </div>
 
-                          {/* Кнопка удаления (показывается только автору комментария) */}
                           {comment.user.id === userComment && (
                             <Button
                               variant="danger"
@@ -200,11 +199,11 @@ const ShowPost = () => {
                       ))}
                     </ListGroup>
                   ) : (
-                    <p className="text-muted">Aucun commentaire pour le moment.</p>
+                    <p className="text-white">Aucun commentaire pour le moment.</p>
                   )}
                 </Card.Body>
 
-                <Card.Body>
+                <Card.Body className="text-white">
                   <h4 className="mb-3">Ajouter un commentaire</h4>
                   <Form onSubmit={addComment}>
                     <Form.Group controlId="comment">
@@ -222,7 +221,7 @@ const ShowPost = () => {
                         {validationError.content_comment}
                       </p>
                     )}
-                    <Button variant="primary" type="submit" className="mt-3">
+                    <Button type="submit" className="mt-3 btnStyle col-12">
                       Publier
                     </Button>
                   </Form>

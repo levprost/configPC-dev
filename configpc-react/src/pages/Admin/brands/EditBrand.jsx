@@ -53,7 +53,7 @@ const EditBrand = () => {
     }
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/brands/${brand}`, formData, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/brands/${brand}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
          // Spécifie le bon type de contenu pour l'image
       });

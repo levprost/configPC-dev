@@ -258,11 +258,11 @@ const AddConfiguration = () => {
                 <h5 className="text-center mb-3">Les composant du PC que vous avez choisi:</h5>
                 <hr className="strictLine" />
                 {selectedComponents.map((comp) => (
-                  <div className="col-md-6 col-lg-4 mb-3" key={comp.id}>
+                  <div className="col-md-6 col-lg-6 mb-3" key={comp.id}>
                     <div className="card h-100 border-card">
                       {comp.image_component && (
                         <img
-                          src={`${process.env.REACT_APP_IMAGE_URL}/${comp.image_component}`}
+                          src={`${process.env.REACT_APP_FILE_URL}/${comp.image_component}`}
                           className="card-img-top"
                           alt={comp.name_component}
                           style={{ objectFit: "cover", height: "180px" }}

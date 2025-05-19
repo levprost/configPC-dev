@@ -6,6 +6,8 @@ import imageCarousel from "./../public/graph.jpg";
 import imageDefaultPost from "./../public/logo.png";
 import "./../styles/css/homePage.css";
 import "./../styles/css/buttonHome.css";
+import { Button } from "react-bootstrap";
+
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -52,8 +54,11 @@ const Home = () => {
                       Combien d'énergie mon ordinateur consomme-t-il?
                     </h2>
                     <div className="carousel-caption">
-                      <button className="glowing-btn btnCalc">
+                      <button className="glowing-btn btnCalc" >
+                      <a href="/calculconfiguration">
                         Calculatrice en ligne
+                      </a>
+                        
                       </button>
                     </div>
                   </div>
@@ -65,7 +70,7 @@ const Home = () => {
                   <h2 className="titleSlideImg">
                     Combien d'énergie mon ordinateur consomme-t-il?
                   </h2>
-                  <button className="glowing-btn btnCalcImg">
+                  <button className="glowing-btn btnCalcImg"  href="/calculator">
                     Calculatrice en ligne
                   </button>
                 </div>
@@ -165,7 +170,7 @@ const Home = () => {
                             : post.description_post}
                         </p>
                         <a
-                          href={`/posts/${post.id}`}
+                          href={`/ShowPost/${post.id}`}
                           className="btn-default12"
                         >
                           Lire la suite

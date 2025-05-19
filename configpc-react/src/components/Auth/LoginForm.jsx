@@ -72,6 +72,11 @@ function LoginForm() {
         <Button type="submit" className="mt-4 col-12 btnLogReg">
           Connexion
         </Button>
+        <Form.Group controlId="register" className="mt-3">
+           <Form.Text className="plustext">
+            Vous n'avez pas de compte ? <a href="/register">Inscrivez-vous</a>
+          </Form.Text>
+        </Form.Group>
       </Form>
     </div>
   );

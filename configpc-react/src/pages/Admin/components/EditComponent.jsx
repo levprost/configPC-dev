@@ -62,7 +62,7 @@ const EditComponent = () => {
   const fetchBrands = async () => {
     try {
       const res = await axios.get("http://127.0.0.1:8000/api/brands");
-      setBrands(res.data);
+      setBrands(res.data.data);
     } catch (error) {
       console.error("Error loading brands:", error);
     }
@@ -72,7 +72,7 @@ const EditComponent = () => {
   const fetchCategories = async () => {
     try {
       const res = await axios.get("http://127.0.0.1:8000/api/categories");
-      setCategories(res.data);
+      setCategories(res.data.data);
     } catch (error) {
       console.error("Error loading categories:", error);
     }
@@ -146,7 +146,7 @@ const EditComponent = () => {
                 )}
 
                 <Form onSubmit={updateComponent}>
-                <Row>
+                  <Row>
                     <Col>
                       <Form.Group>
                         <Form.Label>Nom du composant</Form.Label>
