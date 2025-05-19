@@ -15,7 +15,7 @@ init-publish:
 	docker context use configPC-site
 publish:
 	docker context use configPC-site
-	docker-compose down --rmi all --remove-orphans
+	docker-compose down --remove-orphans
 	docker system prune -a
 	docker login https://ghcr.io
 	docker compose -f ./docker-stack.yml up -d
